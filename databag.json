@@ -1,0 +1,202 @@
+{
+    "id": "env_default",
+    "release": "grizzly",
+	"services": {
+		"compute": "enable",
+		"network": "enable",
+		"volume": "enable",
+		"objectstorage": "disable",
+		"dashboard": "enable",
+		"identity": "enable",
+		"image": "enable",
+		"metering": "disable"
+	},
+    "networking": {
+        "control": {
+            "interface": "eth1"
+        },
+        "tenant": {
+            "interface": "eth0"
+        },
+        "public": {
+            "interface": "eth2"
+        },
+        "storage": {
+            "interface": "eth0"
+        }
+    },
+	"ntp": {
+		"ntpserver": "127.0.0.1"
+	},
+    "db": {
+        "service_type": "mysql",
+        "mysql": {
+            "bind_address": "0.0.0.0",
+            "port": "3306"
+        }        
+    },
+    "mq": {
+        "service_type": "rabbitmq",
+        "rabbitmq": {
+            "bind_address": "0.0.0.0",
+            "port": "5672"
+        }
+    },
+    "credential": {
+        "text": true,
+        "mysql": {
+            "super": {
+                "username": "root",
+                "password": "test"
+            },
+            "compute": {
+                "username": "nova",
+                "password": "admin"
+            },
+            "network": {
+                "username": "quantum",
+                "password": "admin"
+            },
+            "volume": {
+                "username": "cinder",
+                "password": "admin"
+            },
+            "dashboard": {
+                "username": "dashboard",
+                "password": "admin"
+            },
+            "identity": {
+                "username": "keystone",
+                "password": "admin"
+            },
+            "image": {
+                "username": "glance",
+                "password": "admin"
+            },
+            "metering": {
+                "username": "ceilometer",
+                "password": "admin"
+            }         
+        },
+        "mq":{
+            "rabbitmq": {
+                "username": "guest",
+                "password": "guest"
+            }
+        },
+        "identity": {
+			"token":{
+				"admin": "01234567890abc0987654321"
+			},
+			"tenants": {
+				"admin": "admin",
+				"service": "service"
+			},
+			"roles": {
+				"admin": "admin",
+				"member": "Member"
+			},
+			"users": {
+				"admin": {
+					"username": "admin",
+					"password": "admin",
+					"tenant": "admin"
+				},
+				"compute": {
+					"username": "nova",
+					"password": "nova",
+					"tenant": "service"
+				},
+				"network": {
+					"username": "quantum",
+					"password": "quantum",
+					"tenant": "service"
+				},
+				"volume": {
+					"username": "cinder",
+					"password": "cinder",
+					"tenant": "service"
+				},
+				"objectstorage": {
+					"username": "swift",
+					"password": "swift",
+					"tenant": "service"
+				},
+				"image": {
+					"username": "glance",
+					"password": "glance",
+					"tenant": "service"
+				},
+				"metering": {
+					"username": "ceilometer",
+					"password": "ceilometer",
+					"tenant": "service"
+				}				
+			}
+        }		
+    },
+    "endpoints": {
+        "identity": {
+            "service": {
+                "host": "127.0.0.1",
+                "scheme": "http"
+            },
+            "admin": {
+                "host": "127.0.0.1",
+                "scheme": "http"
+            }
+        },
+        "compute": {
+            "service": {
+                "host": "127.0.0.1",
+                "scheme": "http"
+            },
+            "novnc": {
+                "host": "127.0.0.1",
+                "scheme": "http"
+            },
+            "xvpvnc": {
+                "host": "127.0.0.1",
+                "scheme": "http"
+            }
+        },
+        "ec2": {
+            "service": {
+                "host": "127.0.0.1",
+                "scheme": "http"
+            },
+            "admin": {
+                "host": "127.0.0.1",
+                "scheme": "http"
+            }            
+        },
+        "network": {
+            "service": {
+                "host": "127.0.0.1",
+                "scheme": "http"
+            }
+        },
+        "image": {
+            "service": {
+                "host": "127.0.0.1",
+                "scheme": "http"
+            },
+            "registry": {
+                "host": "127.0.0.1",
+                "scheme": "http"
+            }
+        },
+        "volume": {
+            "service": {
+                "host": "127.0.0.1",
+                "scheme": "http"
+            }
+        },
+        "metering": {
+            "service": {
+                "host": "127.0.0.1",
+                "scheme": "http"
+            }
+        }
+    }    
+}
