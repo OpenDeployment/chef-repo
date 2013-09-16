@@ -282,12 +282,31 @@ default['openstack']['identity']['roles']['admin'] = "admin"
 default['openstack']['identity']['roles']['member'] = "Member"
 
 # define enable services
-default['openstack']['services'] = {    "compute" => "enable", 
-                                        "network" => "enable", 
-                                        "volume" => "enable", 
-                                        "identity" => "enable", 
-                                        "image" => "enable",
-					"objectstorage" => "disable"
+default['openstack']['services'] = {
+                                       "compute" => {
+                                                        "name" => "nova", 
+                                                        "status" => "enable"
+                                                    },
+                                        "network" => {
+                                                        "name" => "quantum", 
+                                                        "status" => "enable"
+                                                     },
+                                        "volume" => {
+                                                        "name" => "cinder", 
+                                                        "status" => "enable"
+                                                    },
+                                        "identity" => {
+                                                        "name" => "keystone", 
+                                                        "status" => "enable"
+                                                    }, 
+                                        "image" => {
+                                                        "name" => "glance", 
+                                                        "status" => "enable"
+                                                    },
+                                        "object-store" => {
+                                                        "name" => "swift", 
+                                                        "status" => "disable"
+                                                    }
                                     }
 
 # define service users at keystone

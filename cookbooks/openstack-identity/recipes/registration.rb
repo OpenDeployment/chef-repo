@@ -98,62 +98,64 @@ node["openstack"]["identity"]["roles"].each do |role_key|
   end
 end
 
-node["openstack"]["identity"]["users"].each do |username, user_info|
-  openstack_identity_register "Register '#{username}' User" do
-    auth_uri auth_uri
-    bootstrap_token bootstrap_token
-    user_name username
-    user_pass user_info["password"]
-    tenant_name user_info["default_tenant"]
-    user_enabled true # Not required as this is the default
 
-    action :create_user
-  end
-
-  user_info["roles"].each do |rolename, tenant_list|
-    tenant_list.each do |tenantname|
-      openstack_identity_register "Grant '#{rolename}' Role to '#{username}' User in '#{tenantname}' Tenant" do
+node['openstack']['services'].each_key do |service|
+    cu_user = node['openstack']['identity']["#{service}"]['username']
+    cu_pass = node['openstack']['identity']["#{service}"]['password']
+    cu_tenant = node['openstack']['identity']["#{service}"]['tenant']
+    cu_role = node['openstack']['identity']["#{service}"]['role']
+        
+    openstack_identity_register "Register '#{service}' User" do
         auth_uri auth_uri
         bootstrap_token bootstrap_token
-        user_name username
-        role_name rolename
-        tenant_name tenantname
-
-        action :grant_role
-      end
+        user_name cu_user
+        user_pass cu_pass
+        tenant_name cu_tenant
+        user_enabled true # Not required as this is the default
+        action :create_user
     end
-  end
+    
+    openstack_identity_register "Grant #{cu_role} Role to #{cu_user} User in #{cu_tenant} Tenant" do
+        auth_uri auth_uri
+        bootstrap_token bootstrap_token
+        user_name cu_user
+        role_name cu_role
+        tenant_name cu_tenant       
+        action :grant_role
+    end    
+    
+    cu_service = node['openstack']['services']["#{service}"]['name']
+    
+    openstack_identity_register "Register #{service} Service" do
+        auth_uri auth_uri
+        bootstrap_token bootstrap_token
+        puts "********** #{cu_service} *************************"
+        service_name "#{cu_service}"
+        service_type "#{service}"
+        service_description "Keystone #{service} Service"        
+        action :create_service
+    end    
+    
+    if "#{node['openstack']['services']["#{service}"]['status']}" == "enable"
+        service_endpoint = endpoint "#{service}-api"
+        node.set['openstack']["#{service}"]['adminURL'] = service_endpoint.to_s
+        node.set['openstack']["#{service}"]['internalURL'] = service_endpoint.to_s
+        node.set['openstack']["#{service}"]['publicURL'] = service_endpoint.to_s
+        puts "node.set['openstack']["#{service}"]['adminURL'] = # node.set['openstack']['#{service}']['adminURL']"  
+        
+        openstack_identity_register "Register #{service} Endpoint" do
+            auth_uri auth_uri
+            bootstrap_token bootstrap_token
+            service_type "#{service}"
+            endpoint_region node["openstack"]["identity"]["region"]
+            endpoint_adminurl node['openstack']["#{service}"]['adminURL']
+            endpoint_internalurl node['openstack']["#{service}"]['internalURL']
+            endpoint_publicurl node['openstack']["#{service}"]['publicURL']        
+            action :create_endpoint
+        end
+    end
 end
 
-openstack_identity_register "Register Identity Service" do
-  auth_uri auth_uri
-  bootstrap_token bootstrap_token
-  service_name "keystone"
-  service_type "identity"
-  service_description "Keystone Identity Service"
-
-  action :create_service
-end
-
-node.set["openstack"]["identity"]["adminURL"] = identity_admin_endpoint.to_s
-node.set["openstack"]["identity"]["internalURL"] = identity_endpoint.to_s
-node.set["openstack"]["identity"]["publicURL"] = identity_endpoint.to_s
-
-Chef::Log.info "Keystone AdminURL: #{identity_admin_endpoint.to_s}"
-Chef::Log.info "Keystone InternalURL: #{identity_endpoint.to_s}"
-Chef::Log.info "Keystone PublicURL: #{identity_endpoint.to_s}"
-
-openstack_identity_register "Register Identity Endpoint" do
-  auth_uri auth_uri
-  bootstrap_token bootstrap_token
-  service_type "identity"
-  endpoint_region node["openstack"]["identity"]["region"]
-  endpoint_adminurl node["openstack"]["identity"]["adminURL"]
-  endpoint_internalurl node["openstack"]["identity"]["adminURL"]
-  endpoint_publicurl node["openstack"]["identity"]["publicURL"]
-
-  action :create_endpoint
-end
 
 node["openstack"]["identity"]["users"].each do |username, user_info|
   openstack_identity_register "Create EC2 credentials for '#{username}' user" do

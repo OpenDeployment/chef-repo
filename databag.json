@@ -2,14 +2,38 @@
     "id": "env_default",
     "release": "grizzly",
 	"services": {
-		"compute": "enable",
-		"network": "enable",
-		"volume": "enable",
-		"objectstorage": "disable",
-		"dashboard": "enable",
-		"identity": "enable",
-		"image": "enable",
-		"metering": "disable"
+		"compute": {
+            "name": "nova",
+            "status": "enable"
+        },
+		"network": {
+            "name": "quantum",
+            "status": "enable"
+        },
+		"volume":{
+            "name": "cinder",
+            "status": "enable"
+        },
+		"object-store": {
+            "name": "swift",
+            "status": "disable"
+        },
+		"dashboard": {
+            "name": "horizon",
+            "status": "enable"
+        },
+		"identity": {
+            "name": "quantum",
+            "status": "enable"
+        },
+		"image": {
+            "name": "glance",
+            "status": "enable"
+        },
+		"metering": {
+            "name": "ceilometer",
+            "status": "disable"
+        }
 	},
     "networking": {
         "control": {
@@ -117,7 +141,7 @@
 					"password": "cinder",
 					"tenant": "service"
 				},
-				"objectstorage": {
+				"object-store": {
 					"username": "swift",
 					"password": "swift",
 					"tenant": "service"
