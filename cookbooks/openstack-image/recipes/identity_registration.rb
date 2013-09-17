@@ -27,7 +27,7 @@ end
 
 identity_admin_endpoint = endpoint "identity-admin"
 
-token = secret "secrets", "openstack_identity_bootstrap_token"
+token = secret "secrets", "#{node['openstack']['identity']['admin_token']}"
 auth_url = ::URI.decode identity_admin_endpoint.to_s
 
 registry_endpoint = endpoint "image-registry"

@@ -129,10 +129,10 @@ node['openstack']['services'].each_key do |service|
     openstack_identity_register "Register #{service} Service" do
         auth_uri auth_uri
         bootstrap_token bootstrap_token
-        puts "********** #{cu_service} *************************"
+        puts "**********service=#{service}  ,  cu_service = #{cu_service} *************************"
         service_name "#{cu_service}"
         service_type "#{service}"
-        service_description "Keystone #{service} Service"        
+        service_description "Openstack #{service} Service"        
         action :create_service
     end    
     

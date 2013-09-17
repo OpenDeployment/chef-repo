@@ -24,7 +24,7 @@ class ::Chef::Recipe
 end
 
 identity_admin_endpoint = endpoint "identity-admin"
-bootstrap_token = secret "secrets", "openstack_identity_bootstrap_token"
+bootstrap_token = secret "secrets", "#{node['openstack']['identity']['admin_token']}"
 auth_uri = ::URI.decode identity_admin_endpoint.to_s
 service_pass = service_password "openstack-compute"
 service_user = node["openstack"]["compute"]["service_user"]

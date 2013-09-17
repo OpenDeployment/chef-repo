@@ -21,7 +21,7 @@ def block_storage_stubs
   ::Chef::Recipe.any_instance.stub(:rabbit_servers).
     and_return "1.1.1.1:5672,2.2.2.2:5672"
   ::Chef::Recipe.any_instance.stub(:secret).
-    with("secrets", "openstack_identity_bootstrap_token").
+    with("secrets", "#{node['openstack']['identity']['admin_token']}").
     and_return "bootstrap-token"
   ::Chef::Recipe.any_instance.stub(:db_password).and_return String.new
   ::Chef::Recipe.any_instance.stub(:user_password).and_return String.new

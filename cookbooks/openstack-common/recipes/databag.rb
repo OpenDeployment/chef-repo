@@ -69,7 +69,7 @@ node['openstack']['services'].each_key do |service|
     node.override['openstack']['services']["#{service}"]['name'] = mydata['services']["#{service}"]['name']
     node.override['openstack']['services']["#{service}"]['status'] = mydata['services']["#{service}"]['status']
     if "#{service}" != "identity" and "#{service}" != "dashboard"
-        node.override["openstack"]["identity"]["#{service}"]["username"] = mydata["credential"]["identity"]["users"]["#{service}"]["username"]
+        node.override['openstack']['identity']["#{service}"]['username'] = mydata['credential']['identity']['users']["#{service}"]['username']
         node.override['openstack']['identity']["#{service}"]['password'] = mydata['credential']['identity']['users']["#{service}"]['password']
         node.override['openstack']['identity']["#{service}"]['role'] = mydata['credential']['identity']['roles']['admin']
         node.set['openstack']['identity']["#{service}"]['tenant'] = mydata['credential']['identity']['users']["#{service}"]['tenant']

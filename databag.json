@@ -1,40 +1,40 @@
 {
     "id": "env_default",
     "release": "grizzly",
-	"services": {
-		"compute": {
+    "services": {
+        "compute": {
             "name": "nova",
             "status": "enable"
         },
-		"network": {
+        "network": {
             "name": "quantum",
             "status": "enable"
         },
-		"volume":{
+        "volume":{
             "name": "cinder",
             "status": "enable"
         },
-		"object-store": {
+        "object-store": {
             "name": "swift",
             "status": "disable"
         },
-		"dashboard": {
+        "dashboard": {
             "name": "horizon",
             "status": "enable"
         },
-		"identity": {
+        "identity": {
             "name": "keystone",
             "status": "enable"
         },
-		"image": {
+        "image": {
             "name": "glance",
             "status": "enable"
         },
-		"metering": {
+        "metering": {
             "name": "ceilometer",
             "status": "disable"
         }
-	},
+    },
     "networking": {
         "control": {
             "interface": "eth1"
@@ -49,9 +49,9 @@
             "interface": "eth0"
         }
     },
-	"ntp": {
-		"ntpserver": "127.0.0.1"
-	},
+    "ntp": {
+        "ntpserver": "127.0.0.1"
+    },
     "db": {
         "service_type": "mysql",
         "mysql": {
@@ -109,55 +109,55 @@
             }
         },
         "identity": {
-			"token":{
-				"admin": "01234567890abc0987654321"
-			},
-			"tenants": {
-				"admin": "admin",
-				"service": "service"
-			},
-			"roles": {
-				"admin": "admin",
-				"member": "Member"
-			},
-			"users": {
-				"admin": {
-					"username": "admin",
-					"password": "admin",
-					"tenant": "admin"
-				},
-				"compute": {
-					"username": "nova",
-					"password": "nova",
-					"tenant": "service"
-				},
-				"network": {
-					"username": "quantum",
-					"password": "quantum",
-					"tenant": "service"
-				},
-				"volume": {
-					"username": "cinder",
-					"password": "cinder",
-					"tenant": "service"
-				},
-				"object-store": {
-					"username": "swift",
-					"password": "swift",
-					"tenant": "service"
-				},
-				"image": {
-					"username": "glance",
-					"password": "glance",
-					"tenant": "service"
-				},
-				"metering": {
-					"username": "ceilometer",
-					"password": "ceilometer",
-					"tenant": "service"
-				}				
-			}
-        }		
+            "token":{
+                "admin": "01234567890abc0987654321"
+            },
+            "tenants": {
+                "admin": "admin",
+                "service": "service"
+            },
+            "roles": {
+                "admin": "admin",
+                "member": "Member"
+            },
+            "users": {
+                "admin": {
+                    "username": "admin",
+                    "password": "admin",
+                    "tenant": "admin"
+                },
+                "compute": {
+                    "username": "nova",
+                    "password": "nova",
+                    "tenant": "service"
+                },
+                "network": {
+                    "username": "quantum",
+                    "password": "quantum",
+                    "tenant": "service"
+                },
+                "volume": {
+                    "username": "cinder",
+                    "password": "cinder",
+                    "tenant": "service"
+                },
+                "object-store": {
+                    "username": "swift",
+                    "password": "swift",
+                    "tenant": "service"
+                },
+                "image": {
+                    "username": "glance",
+                    "password": "glance",
+                    "tenant": "service"
+                },
+                "metering": {
+                    "username": "ceilometer",
+                    "password": "ceilometer",
+                    "tenant": "service"
+                }               
+            }
+        }       
     },
     "endpoints": {
         "identity": {

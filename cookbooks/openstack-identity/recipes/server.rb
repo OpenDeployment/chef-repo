@@ -111,7 +111,7 @@ db_pass = db_password "#{mydata['credential']['mysql']['identity']['password']}"
 
 sql_connection = db_uri("identity", db_user, db_pass)
 
-bootstrap_token = secret "secrets", "openstack_identity_bootstrap_token"
+bootstrap_token = secret "secrets", "#{node['openstack']['identity']['admin_token']}"
 
 ip_address = address_for node["openstack"]["identity"]["bind_interface"]
 
