@@ -104,25 +104,27 @@ node['openstack']['services'].each_key do |service|
     cu_pass = node['openstack']['identity']["#{service}"]['password']
     cu_tenant = node['openstack']['identity']["#{service}"]['tenant']
     cu_role = node['openstack']['identity']["#{service}"]['role']
-        
-    openstack_identity_register "Register '#{service}' User" do
-        auth_uri auth_uri
-        bootstrap_token bootstrap_token
-        user_name cu_user
-        user_pass cu_pass
-        tenant_name cu_tenant
-        user_enabled true # Not required as this is the default
-        action :create_user
-    end
     
-    openstack_identity_register "Grant #{cu_role} Role to #{cu_user} User in #{cu_tenant} Tenant" do
-        auth_uri auth_uri
-        bootstrap_token bootstrap_token
-        user_name cu_user
-        role_name cu_role
-        tenant_name cu_tenant       
-        action :grant_role
-    end    
+    if "#{service}" != "identity"   
+        openstack_identity_register "Register '#{service}' User" do
+            auth_uri auth_uri
+            bootstrap_token bootstrap_token
+            user_name cu_user
+            user_pass cu_pass
+            tenant_name cu_tenant
+            user_enabled true # Not required as this is the default
+            action :create_user
+        end
+        
+        openstack_identity_register "Grant #{cu_role} Role to #{cu_user} User in #{cu_tenant} Tenant" do
+            auth_uri auth_uri
+            bootstrap_token bootstrap_token
+            user_name cu_user
+            role_name cu_role
+            tenant_name cu_tenant       
+            action :grant_role
+        end    
+    end
     
     cu_service = node['openstack']['services']["#{service}"]['name']
     
@@ -136,7 +138,7 @@ node['openstack']['services'].each_key do |service|
         action :create_service
     end    
     
-    if "#{node['openstack']['services']["#{service}"]['status']}" == "enable"
+    if "#{node['openstack']['services']['#{service}']['status']}" == "enable"
         service_endpoint = endpoint "#{service}-api"
         node.set['openstack']["#{service}"]['adminURL'] = service_endpoint.to_s
         node.set['openstack']["#{service}"]['internalURL'] = service_endpoint.to_s
