@@ -131,19 +131,17 @@ node['openstack']['services'].each_key do |service|
     openstack_identity_register "Register #{service} Service" do
         auth_uri auth_uri
         bootstrap_token bootstrap_token
-        puts "**********service=#{service}  ,  cu_service = #{cu_service} *************************"
         service_name "#{cu_service}"
         service_type "#{service}"
         service_description "Openstack #{service} Service"        
         action :create_service
     end    
     
-    if "#{node['openstack']['services']['#{service}']['status']}" == "enable"
+    if %Q/#{node['openstack']['services']["#{service}"]['status']}/ == "enable"
         service_endpoint = endpoint "#{service}-api"
         node.set['openstack']["#{service}"]['adminURL'] = service_endpoint.to_s
         node.set['openstack']["#{service}"]['internalURL'] = service_endpoint.to_s
         node.set['openstack']["#{service}"]['publicURL'] = service_endpoint.to_s
-        puts "node.set['openstack']["#{service}"]['adminURL'] = # node.set['openstack']['#{service}']['adminURL']"  
         
         openstack_identity_register "Register #{service} Endpoint" do
             auth_uri auth_uri
