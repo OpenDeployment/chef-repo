@@ -23,7 +23,7 @@
             "status": "enable"
         },
 		"identity": {
-            "name": "quantum",
+            "name": "keystone",
             "status": "enable"
         },
 		"image": {
