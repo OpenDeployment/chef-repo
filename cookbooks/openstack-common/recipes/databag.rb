@@ -26,9 +26,6 @@ end
 
 myitem = 'env_default'.freeze if defined?("#{node[mycluster]}")
 
-puts "+++++++++++++++++++++++++++++"
-puts "The current databag is #{defaultbag}, databagitem is #{myitem}"
-puts "+++++++++++++++++++++++++++++"
 
 if !search(defaultbag, "id:#{myitem}")
     Chef::Application.fatal!("databagitem '#{databagitem}' doesn't exist.")
@@ -53,11 +50,6 @@ node.override['openstack']['yum']['openstack']['url']="http://repos.fedorapeople
 node.override['openstack']['identity']['admin_token'] = mydata['credential']['identity']['token']['admin']
 node.override['openstack']['identity']['tenants'] = ["#{ mydata['credential']['identity']['tenants']['admin']}", "#{ mydata['credential']['identity']['tenants']['service']}"]
 node.override["openstack"]["identity"]["roles"] = ["#{ mydata['credential']['identity']['roles']['admin']}", "#{ mydata['credential']['identity']['roles']['member']}"]
-
-puts "************************"
-puts "node['openstack']['identity']['tenants']= #{node['openstack']['identity']['tenants']}"
-puts "node['openstack']['identity']['roles']= #{node['openstack']['identity']['roles']}"
-puts "************************"
 
 
 node.override['openstack']['identity']['admin_tenant_name'] = mydata['credential']['identity']['tenants']['admin']

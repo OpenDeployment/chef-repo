@@ -276,7 +276,7 @@ default["openstack"]["network"]["lbaas_plugin"] = "ovs"
 # or change this to 'gre' and configure tunnel_id_ranges below in order for tenant
 # networks to provide connectivity between hosts. Set to 'none' to disable creation
 # of tenant networks.
-default["openstack"]["network"]["openvswitch"]["tenant_network_type"] = 'local'
+default["openstack"]["network"]["openvswitch"]["tenant_network_type"] = 'gre'
 
 # Comma-separated list of <physical_network>[:<vlan_min>:<vlan_max>] tuples enumerating
 # ranges of VLAN IDs on named physical networks that are available for allocation.
@@ -291,14 +291,14 @@ default["openstack"]["network"]["openvswitch"]["network_vlan_ranges"] = nil
 # Set to True in the server and the agents to enable support
 # for GRE networks. Requires kernel support for OVS patch ports and
 # GRE tunneling.
-default["openstack"]["network"]["openvswitch"]["enable_tunneling"] = "False"
+default["openstack"]["network"]["openvswitch"]["enable_tunneling"] = "True"
 
 # Comma-separated list of <tun_min>:<tun_max> tuples
 # enumerating ranges of GRE tunnel IDs that are available for tenant
 # network allocation if tenant_network_type is 'gre'.
 #
 # Example: tunnel_id_ranges = 1:1000
-default["openstack"]["network"]["openvswitch"]["tunnel_id_ranges"] = nil
+default["openstack"]["network"]["openvswitch"]["tunnel_id_ranges"] = "1:10000"
 
 # Do not change this parameter unless you have a good reason to.
 # This is the name of the OVS integration bridge. There is one per hypervisor.
@@ -717,7 +717,7 @@ when "fedora", "redhat", "centos" # :pragma-foodcritic: ~FC024 - won't fix this
     "quantum_dhcp_build_packages" => [],
     "quantum_l3_packages" => [ "quantum-l3-agent" ],
     "quantum_openvswitch_packages" => ["openvswitch"],
-    "quantum_openvswitch_agent_packages" => ["openstack-quantum-openvswitch-agent"],
+    "quantum_openvswitch_agent_packages" => ["openstack-quantum-openvswitch"],
     "quantum_linuxbridge_agent_packages" => ["openstack-quantum-linuxbridge"],
     "quantum_metadata_agent_packages" => [],
     "quantum_plugin_package" => "openstack-quantum-%plugin%",
@@ -726,7 +726,7 @@ when "fedora", "redhat", "centos" # :pragma-foodcritic: ~FC024 - won't fix this
     "quantum_l3_agent_service" => "quantum-l3-agent",
     "quantum_metadata_agent_service" => "quantum-metadata-agent",
     "quantum_openvswitch_service" => "openvswitch",
-    "quantum_openvswitch_agent_service" => "openstack-quantum-openvswitch-agent",
+    "quantum_openvswitch_agent_service" => "quantum-openvswitch-agent",
     "quantum_linuxbridge_agent_service" => "quantum-linuxbridge-agent",
     "quantum_server_service" => "quantum-server",
     "package_overrides" => ""
