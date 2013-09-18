@@ -47,6 +47,29 @@
         },
         "storage": {
             "interface": "eth0"
+        },
+        "plugins": {
+            "ovs": {
+                "status": "enable",
+                "tenant_network_type": "gre",
+                "integration_bridge": "br-int",
+                "gre": {
+                    "enable_tunneling": "True",
+                    "tunnel_id_ranges": "1:3000",                    
+                    "tunnel_bridge": "br-tun",
+                    "local_ip_interface": "eth0",
+                    "network_vlan_ranges": "nil",
+                    "bridge_mappings": "nil"                    
+                },
+                "vlan": {
+                    "enable_tunneling": "False",
+                    "tunnel_id_ranges": "nil",                    
+                    "tunnel_bridge": "nil",
+                    "local_ip_interface": "nil",
+                    "network_vlan_ranges": "physnet1:1000:2999",
+                    "bridge_mappings": "physnet1:br-eth1"
+                }
+            }
         }
     },
     "ntp": {
@@ -156,8 +179,11 @@
                     "password": "ceilometer",
                     "tenant": "service"
                 }               
-            }
-        }       
+            }            
+        },
+        "metadata": {
+            "password": "Hello_Openstack"
+        }
     },
     "endpoints": {
         "identity": {
@@ -180,6 +206,10 @@
                 "scheme": "http"
             },
             "xvpvnc": {
+                "host": "127.0.0.1",
+                "scheme": "http"
+            },
+            "metadata": {
                 "host": "127.0.0.1",
                 "scheme": "http"
             }
