@@ -336,42 +336,59 @@ default['openstack']['db']['compute']['db_type'] = node['openstack']['db']['serv
 default['openstack']['db']['compute']['host'] = "127.0.0.1"
 default['openstack']['db']['compute']['port'] = node['openstack']['db']['port']
 default['openstack']['db']['compute']['db_name'] = "nova"
+default['openstack']['db']['compute']['username'] = "nova"
+default['openstack']['db']['compute']['password'] = "admin"
+
 
 # Database used by the OpenStack Identity (Keystone) service
 default['openstack']['db']['identity']['db_type'] = node['openstack']['db']['service_type']
 default['openstack']['db']['identity']['host'] = "127.0.0.1"
 default['openstack']['db']['identity']['port'] = node['openstack']['db']['port']
 default['openstack']['db']['identity']['db_name'] = "keystone"
+default['openstack']['db']['identity']['username'] = "keystone"
+default['openstack']['db']['identity']['password'] = "admin"
+
 
 # Database used by the OpenStack Image (Glance) service
 default['openstack']['db']['image']['db_type'] = node['openstack']['db']['service_type']
 default['openstack']['db']['image']['host'] = "127.0.0.1"
 default['openstack']['db']['image']['port'] = node['openstack']['db']['port']
 default['openstack']['db']['image']['db_name'] = "glance"
+default['openstack']['db']['image']['username'] = "glance"
+default['openstack']['db']['image']['password'] = "admin"
 
 # Database used by the OpenStack Network (Quantum) service
 default['openstack']['db']['network']['db_type'] = node['openstack']['db']['service_type']
 default['openstack']['db']['network']['host'] = "127.0.0.1"
 default['openstack']['db']['network']['port'] = node['openstack']['db']['port']
 default['openstack']['db']['network']['db_name'] = "quantum"
+default['openstack']['db']['network']['username'] = "quantum"
+default['openstack']['db']['network']['password'] = "admin"
 
 # Database used by the OpenStack Volume (Cinder) service
 default['openstack']['db']['volume']['db_type'] = node['openstack']['db']['service_type']
 default['openstack']['db']['volume']['host'] = "127.0.0.1"
 default['openstack']['db']['volume']['port'] = node['openstack']['db']['port']
 default['openstack']['db']['volume']['db_name'] = "cinder"
+default['openstack']['db']['volume']['username'] = "cinder"
+default['openstack']['db']['volume']['password'] = "admin"
 
 # Database used by the OpenStack Dashboard (Horizon)
 default['openstack']['db']['dashboard']['db_type'] = node['openstack']['db']['service_type']
 default['openstack']['db']['dashboard']['host'] = "127.0.0.1"
 default['openstack']['db']['dashboard']['port'] = node['openstack']['db']['port']
 default['openstack']['db']['dashboard']['db_name'] = "horizon"
+default['openstack']['db']['dashboard']['username'] = "horizon"
+default['openstack']['db']['dashboard']['password'] = "admin"
 
 # Database used by OpenStack Metering (Ceilometer)
 default['openstack']['db']['metering']['db_type'] = node['openstack']['db']['service_type']
 default['openstack']['db']['metering']['host'] = "127.0.0.1"
 default['openstack']['db']['metering']['port'] = node['openstack']['db']['port']
 default['openstack']['db']['metering']['db_name'] = "ceilometer"
+default['openstack']['db']['metering']['username'] = "ceilometer"
+default['openstack']['db']['metering']['password'] = "admin"
+
 
 # Switch to store the MySQL root password in a databag instead of
 # using the generated OpenSSL cookbook secure_password one.

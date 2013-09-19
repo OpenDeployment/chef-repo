@@ -24,6 +24,8 @@ module ::Openstack
   # @param [String] family The protocol family to use.
   # @return [String] The IPv4 address.
   def address_for interface, family="inet"
+    puts "**********************interface = #{interface}*******************"
+    puts %Q/node["network"]["interfaces"][interface]["addresses"]= #{node["network"]["interfaces"]["#{interface}"]["addresses"]}/
     interface_node = node["network"]["interfaces"][interface]["addresses"]
     interface_node.select do |address, data|
       if data['family'] == family

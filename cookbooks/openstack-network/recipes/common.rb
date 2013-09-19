@@ -98,17 +98,17 @@ rabbit_server_role = node["openstack"]["network"]["rabbit_server_chef_role"]
 if node["openstack"]["network"]["rabbit"]["ha"]
   rabbit_hosts = rabbit_servers
 end
-rabbit_pass = user_password node["openstack"]["network"]["rabbit"]["username"]
+rabbit_pass = user_password node['openstack']['mq']['password']
 
 identity_endpoint = endpoint "identity-api"
 auth_uri = ::URI.decode identity_endpoint.to_s
 
-db_user = node["openstack"]["network"]["db"]["username"]
-db_pass = db_password "quantum"
+db_user = node['openstack']['db']['network']['username']
+db_pass = db_password node['openstack']['db']['network']['password']
 sql_connection = db_uri("network", db_user, db_pass)
 
 api_endpoint = endpoint "network-api"
-service_pass = service_password "openstack-network"
+service_pass = service_password node['openstack']['identity']['network']['password']
 service_tenant_name = node["openstack"]["network"]["service_tenant_name"]
 service_user = node["openstack"]["network"]["service_user"]
 
@@ -117,6 +117,7 @@ if node["openstack"]["network"]["api"]["bind_interface"].nil?
   bind_port = api_endpoint.port
 else
   bind_address = address_for node["openstack"]["network"]["api"]["bind_interface"]
+  #bind_address = node['openstack']['endpoints']['network-api']['host']
   bind_port = node["openstack"]["network"]["api"]["bind_port"]
 end
 

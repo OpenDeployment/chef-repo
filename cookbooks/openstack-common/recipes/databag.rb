@@ -64,6 +64,12 @@ node.override['openstack']['identity']['admin_password'] = mydata['credential'][
 node['openstack']['services'].each_key do |service|
     node.override['openstack']['services']["#{service}"]['name'] = mydata['services']["#{service}"]['name']
     node.override['openstack']['services']["#{service}"]['status'] = mydata['services']["#{service}"]['status']
+    
+    if service != "object-store"
+        node.set['openstack']['db']["#{service}"]['username'] = mydata['credential']['mysql']["#{service}"]['username']
+        node.set['openstack']['db']["#{service}"]['password'] = mydata['credential']['mysql']["#{service}"]['password']
+    end
+
     if "#{service}" != "identity" and "#{service}" != "dashboard"
         node.override['openstack']['identity']["#{service}"]['username'] = mydata['credential']['identity']['users']["#{service}"]['username']
         node.override['openstack']['identity']["#{service}"]['password'] = mydata['credential']['identity']['users']["#{service}"]['password']
@@ -241,7 +247,7 @@ node.override["openstack"]["network"]["service_tenant_name"] = node['openstack']
 node.override["openstack"]["network"]["service_user"] = node['openstack']['identity']['network']['username']
 node.override["openstack"]["network"]["service_role"] = node['openstack']['identity']['network']['role']
 
-node.override["openstack"]["network"]["api"]["bind_interface"] = node['openstack']['endpoints']['network-api']['host']
+node.override["openstack"]["network"]["api"]["bind_interface"] = mydata['networking']['control']['interface']
 
 
 # ============================= L3 Agent Configuration =====================
@@ -321,8 +327,9 @@ node.override["openstack"]["network"]["openvswitch"]["tunnel_bridge"] = mydata['
 # address of the specified interface.  If local_ip_interface is set
 # it will take precedence.
 local_ip_interface = mydata['networking']['plugins']['ovs']["#{tenant_network_type}"]['local_ip_interface']
-if "#{local_ip_interface}" != ("nil")
-    local_ip= address_for(local_ip_interface)
+if local_ip_interface != ("nil")
+     puts "***********local_ip_interface = #{local_ip_interface}***************"
+     local_ip= address_for(local_ip_interface)
      puts "******local_ip=#{local_ip}***"
 else
     local_ip="nil"

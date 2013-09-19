@@ -38,6 +38,12 @@ platform_options["quantum_server_packages"].each do |pkg|
   end
 end
 
+directory "/var/cache/quantum/api" do
+  owner node['openstack']['services']['network']['name']
+  group node['openstack']['services']['network']['name']
+  recursive true
+end
+
 service "quantum-server" do
   service_name platform_options["quantum_server_service"]
   supports :status => true, :restart => true
