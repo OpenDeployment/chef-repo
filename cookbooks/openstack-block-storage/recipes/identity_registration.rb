@@ -29,11 +29,11 @@ identity_admin_endpoint = endpoint "identity-admin"
 bootstrap_token = secret "secrets", "#{node['openstack']['identity']['admin_token']}"
 auth_uri = ::URI.decode identity_admin_endpoint.to_s
 cinder_api_endpoint = endpoint "volume-api"
-service_pass = service_password "openstack-block-storage"
+service_pass = service_password node['openstack']['identity']['volume']['password']
 region = node["openstack"]["block-storage"]["region"]
-service_tenant_name = node["openstack"]["block-storage"]["service_tenant_name"]
-service_user = node["openstack"]["block-storage"]["service_user"]
-service_role = node["openstack"]["block-storage"]["service_role"]
+service_tenant_name = node['openstack']['identity']['volume']['tenant']
+service_user = node['openstack']['identity']['volume']['username']
+service_role = node['openstack']['identity']['volume']['role']
 
 openstack_identity_register "Register Cinder Volume Service" do
   auth_uri auth_uri

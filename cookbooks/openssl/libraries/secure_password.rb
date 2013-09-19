@@ -25,13 +25,9 @@ module Opscode
     module Password
       def secure_password(length = 20)
         pw = String.new
-	puts "+++++++++++++++++++before encreption+++++++++++++++++++++"
-	puts "pw = #{pw}"
         while pw.length < length
           pw << ::OpenSSL::Random.random_bytes(1).gsub(/\W/, '')      
         end
-        puts "+++++++++++++++++++after encreption+++++++++++++++++++++"
-        puts "pw = #{pw}"
         pw
       end
     end

@@ -38,10 +38,26 @@ platform_options["quantum_server_packages"].each do |pkg|
   end
 end
 
-directory "/var/cache/quantum/api" do
-  owner node['openstack']['services']['network']['name']
-  group node['openstack']['services']['network']['name']
-  recursive true
+platform_options["quantum_openvswitch_agent_packages"].each do|pkg|
+  package pkg do
+    options platform_options["package_overrides"]
+    action :install
+  end
+end
+
+if node['platform_family'] == "rhel"
+  directory "/var/cache/quantum/api" do
+    owner node['openstack']['services']['network']['name']
+    group node['openstack']['services']['network']['name']
+    recursive true
+  end
+
+  template "/etc/init.d/quantum-server" do
+    source "quantum-server.start.erb"
+    owner "root"
+    group "root"
+    mode 00755
+  end
 end
 
 service "quantum-server" do

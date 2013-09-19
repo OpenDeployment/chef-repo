@@ -24,7 +24,7 @@ driver_name = node["openstack"]["network"]["interface_driver"].split('.').last.d
 main_plugin = node["openstack"]["network"]["interface_driver_map"][driver_name]
 
 identity_endpoint = endpoint "identity-api"
-service_pass = service_password "openstack-network"
+service_pass = service_password node['openstack']['identity']['network']['password']
 metadata_secret = secret "secrets", node["openstack"]["network"]["metadata"]["secret_name"]
 
 template "/etc/quantum/metadata_agent.ini" do

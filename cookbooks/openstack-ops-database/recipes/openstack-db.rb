@@ -24,8 +24,6 @@ end
 # sam added
 mydata = data_bag_item('openstack','env_default')
 
-puts "++++++++++++++++++++++++++++ #{node["openstack"]["db"]["compute"]["username"]} +++++++++"
-puts "************************* #{mydata['credential']['mysql']['dashboard']['password']}  ****************************"
 
 db_create_with_user(
   "compute",

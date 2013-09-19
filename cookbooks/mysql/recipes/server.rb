@@ -34,7 +34,6 @@ if Chef::Config[:solo]
         "For more information, see https://github.com/opscode-cookbooks/mysql#chef-solo-note"
       ].join(' '))
   end
-  puts " ******if Chef::Config[:solo]\n   missing_attrs=#{missing_attrs}******* "
 else
   # generate all passwords
   #  node.override['mysql']['server_debian_password'] = mydata['credential']['mysql']['super']['password']
@@ -44,10 +43,10 @@ else
   #  node.set_unless['mysql']['server_root_password']   = item['credential']['service_credential']['password']
   #  node.set_unless['mysql']['server_repl_password']   = item['credential']['service_credential']['password']
   #  node.save
-  puts "---------------else generate all passwords-----------------------------"
-  #puts "['mysql']['server_debian_password']= #{node.['mysql']['server_debian_password']}"
-  #puts "['mysql']['server_root_password']=#{node.['mysql']['server_root_password']}"
-  #puts "-----------------------------------------------------------------------"
+  # puts "---------------else generate all passwords-----------------------------"
+  # puts "['mysql']['server_debian_password']= #{node.['mysql']['server_debian_password']}"
+  # puts "['mysql']['server_root_password']=#{node.['mysql']['server_root_password']}"
+  # puts "-----------------------------------------------------------------------"
 end
 
 if platform_family?(%w{debian})

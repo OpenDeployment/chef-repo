@@ -328,9 +328,7 @@ node.override["openstack"]["network"]["openvswitch"]["tunnel_bridge"] = mydata['
 # it will take precedence.
 local_ip_interface = mydata['networking']['plugins']['ovs']["#{tenant_network_type}"]['local_ip_interface']
 if local_ip_interface != ("nil")
-     puts "***********local_ip_interface = #{local_ip_interface}***************"
      local_ip= address_for(local_ip_interface)
-     puts "******local_ip=#{local_ip}***"
 else
     local_ip="nil"
 end
