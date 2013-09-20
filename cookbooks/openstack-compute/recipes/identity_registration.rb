@@ -26,10 +26,10 @@ end
 identity_admin_endpoint = endpoint "identity-admin"
 bootstrap_token = secret "secrets", "#{node['openstack']['identity']['admin_token']}"
 auth_uri = ::URI.decode identity_admin_endpoint.to_s
-service_pass = service_password "openstack-compute"
-service_user = node["openstack"]["compute"]["service_user"]
-service_role = node["openstack"]["compute"]["service_role"]
-service_tenant_name = node["openstack"]["compute"]["service_tenant_name"]
+service_pass = service_password node['openstack']['identity']['compute']['password']
+service_user = node['openstack']['identity']['compute']['username']
+service_role = node['openstack']['identity']['compute']['role']
+service_tenant_name = node['openstack']['identity']['compute']['tenant']
 nova_api_endpoint = endpoint "compute-api"
 ec2_admin_endpoint = endpoint "compute-ec2-admin"
 ec2_public_endpoint = endpoint "compute-ec2-api"

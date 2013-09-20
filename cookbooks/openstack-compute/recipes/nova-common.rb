@@ -65,14 +65,14 @@ directory "/etc/nova/rootwrap.d" do
   action :create
 end
 
-db_user = node["openstack"]["compute"]["db"]["username"]
-db_pass = db_password "nova"
+db_user = node['openstack']['db']['compute']['username']
+db_pass = db_password node['openstack']['db']['compute']['password']
 sql_connection = db_uri("compute", db_user, db_pass)
 
 if node["openstack"]["compute"]["rabbit"]["ha"]
-  rabbit_hosts = rabbit_servers
+  rabbit_hosts = node['openstack']['mq']['bind_address']
 end
-rabbit_pass = user_password node["openstack"]["compute"]["rabbit"]["username"]
+rabbit_pass = user_password node['openstack']['mq']['password']
 
 identity_service_role = node["openstack"]["compute"]["identity_service_chef_role"]
 
@@ -86,7 +86,7 @@ end
 
 ksadmin_tenant_name = keystone["openstack"]["identity"]["admin_tenant_name"]
 ksadmin_user = keystone["openstack"]["identity"]["admin_user"]
-ksadmin_pass = user_password ksadmin_user
+ksadmin_pass = user_password node['openstack']['identity']['admin_password']
 
 memcache_servers = memcached_servers.join ","
 

@@ -78,14 +78,14 @@
     "db": {
         "service_type": "mysql",
         "mysql": {
-            "bind_address": "0.0.0.0",
+            "bind_address": "127.0.0.1",
             "port": "3306"
         }        
     },
     "mq": {
         "service_type": "rabbitmq",
         "rabbitmq": {
-            "bind_address": "0.0.0.0",
+            "bind_address": "127.0.0.1",
             "port": "5672"
         }
     },

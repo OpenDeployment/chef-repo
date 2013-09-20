@@ -58,7 +58,7 @@ end
 
 identity_endpoint = endpoint "identity-api"
 identity_admin_endpoint = endpoint "identity-admin"
-service_pass = service_password "openstack-compute"
+service_pass = service_password node['openstack']['identity']['compute']['password']
 
 #TODO(jaypipes): Move this logic and stuff into the openstack-common
 # library cookbook.

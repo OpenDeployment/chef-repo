@@ -98,12 +98,15 @@ template node["openstack"]["dashboard"]["local_settings_path"] do
 end
 
 # FIXME: this shouldn't run every chef run
+# dashboard should not need db, so comment the following code block.
+if "False" == "True"
 execute "openstack-dashboard syncdb" do
   cwd "/usr/share/openstack-dashboard"
   environment ({'PYTHONPATH' => '/etc/openstack-dashboard:/usr/share/openstack-dashboard:$PYTHONPATH'})
   command "python manage.py syncdb --noinput"
   action :run
   # not_if "/usr/bin/mysql -u root -e 'describe #{node["dash"]["db"]}.django_content_type'"
+end
 end
 
 cookbook_file "#{node["openstack"]["dashboard"]["ssl"]["dir"]}/certs/#{node["openstack"]["dashboard"]["ssl"]["cert"]}" do

@@ -58,7 +58,7 @@ service "cinder-api" do
 end
 
 identity_admin_endpoint = endpoint "identity-admin"
-service_pass = service_password "openstack-block-storage"
+service_pass = service_password node['openstack']['identity']['volume']['password']
 
 execute "cinder-manage db sync"
 
