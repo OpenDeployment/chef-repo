@@ -9,6 +9,8 @@
   RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R]
 </VirtualHost>
 
+WSGISocketPrefix run/wsgi
+
 <VirtualHost *:443>
 <%   if node["openstack"]["dashboard"]["server_hostname"] -%>
   ServerName <%= node["openstack"]["dashboard"]["server_hostname"] %>
