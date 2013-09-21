@@ -78,7 +78,7 @@ glance = node["openstack"]["image"]
 
 identity_endpoint = endpoint "identity-api"
 identity_admin_endpoint = endpoint "identity-admin"
-service_pass = service_password "openstack-image"
+service_pass = service_password node['openstack']['identity']['image']['password']
 
 #TODO(jaypipes): Move this logic and stuff into the openstack-common
 # library cookbook.
@@ -94,10 +94,8 @@ end
 
 #db_user = node["openstack"]["image"]["db"]["username"]
 #db_pass = db_password "glance"
-
-mydata = data_bag_item('openstack','env_default')
-db_user = mydata['credential']['mysql']['image']['username']
-db_pass = db_password "#{mydata['credential']['mysql']['image']['password']}"
+db_user = node["openstack"]["db"]["image"]["password"]
+db_pass = db_password node["openstack"]["db"]["image"]["password"]
 
 sql_connection = db_uri("image", db_user, db_pass)
 
