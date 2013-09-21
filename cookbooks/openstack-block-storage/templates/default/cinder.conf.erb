@@ -385,10 +385,13 @@ rabbit_ha_queues=True
 #### (BoolOpt) use H/A queues in RabbitMQ (x-ha-policy: all).You need to
 ####           wipe RabbitMQ database when changing this option.
 <% else -%>
-rabbit_host=<%= node["openstack"]["block-storage"]["rabbit"]["host"] %>
-#### (StrOpt) The RabbitMQ broker address where a single node is used
+# rabbit_host=<%= node["openstack"]["block-storage"]["rabbit"]["host"] %>
+rabbit_host=<%= node['openstack']['mq']['bind_address'] %>
 
-rabbit_port=<%= node["openstack"]["block-storage"]["rabbit"]["port"] %>
+#### (StrOpt) The RabbitMQ broker address where a single node is used
+# rabbit_port=<%= node["openstack"]["block-storage"]["rabbit"]["port"] %>
+rabbit_port=<%= node['openstack']['mq']['port'] %>
+
 #### (IntOpt) The RabbitMQ broker port where a single node is used
 <% end -%>
 

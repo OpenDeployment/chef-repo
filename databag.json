@@ -78,14 +78,14 @@
     "db": {
         "service_type": "mysql",
         "mysql": {
-            "bind_address": "127.0.0.1",
+            "bind_address": "10.145.88.230",
             "port": "3306"
         }        
     },
     "mq": {
         "service_type": "rabbitmq",
         "rabbitmq": {
-            "bind_address": "127.0.0.1",
+            "bind_address": "10.145.88.230",
             "port": "5672"
         }
     },
@@ -188,67 +188,67 @@
     "endpoints": {
         "identity": {
             "service": {
-                "host": "127.0.0.1",
+                "host": "10.145.88.230",
                 "scheme": "http"
             },
             "admin": {
-                "host": "127.0.0.1",
+                "host": "10.145.88.230",
                 "scheme": "http"
             }
         },
         "compute": {
             "service": {
-                "host": "127.0.0.1",
+                "host": "10.145.88.230",
                 "scheme": "http"
             },
             "novnc": {
-                "host": "127.0.0.1",
+                "host": "10.145.88.230",
                 "scheme": "http"
             },
             "xvpvnc": {
-                "host": "127.0.0.1",
+                "host": "10.145.88.230",
                 "scheme": "http"
             },
             "metadata": {
-                "host": "127.0.0.1",
+                "host": "10.145.88.230",
                 "scheme": "http"
             }
         },
         "ec2": {
             "service": {
-                "host": "127.0.0.1",
+                "host": "10.145.88.230",
                 "scheme": "http"
             },
             "admin": {
-                "host": "127.0.0.1",
+                "host": "10.145.88.230",
                 "scheme": "http"
             }            
         },
         "network": {
             "service": {
-                "host": "127.0.0.1",
+                "host": "10.145.88.230",
                 "scheme": "http"
             }
         },
         "image": {
             "service": {
-                "host": "127.0.0.1",
+                "host": "10.145.88.230",
                 "scheme": "http"
             },
             "registry": {
-                "host": "127.0.0.1",
+                "host": "10.145.88.230",
                 "scheme": "http"
             }
         },
         "volume": {
             "service": {
-                "host": "127.0.0.1",
+                "host": "10.145.88.230",
                 "scheme": "http"
             }
         },
         "metering": {
             "service": {
-                "host": "127.0.0.1",
+                "host": "10.145.88.230",
                 "scheme": "http"
             }
         }

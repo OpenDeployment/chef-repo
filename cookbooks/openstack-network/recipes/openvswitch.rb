@@ -42,6 +42,14 @@ if platform?("ubuntu", "debian")
 
 end
 
+directory "/var/run/openvswitch" do
+  recursive true
+  owner node["openstack"]["network"]["platform"]["user"]
+  group node["openstack"]["network"]["platform"]["group"]
+  mode 00755
+  action :create
+end
+
 platform_options["quantum_openvswitch_packages"].each do |pkg|
   package pkg do
     action :install
@@ -57,11 +65,11 @@ end
 service "quantum-openvswitch-switch" do
   service_name platform_options["quantum_openvswitch_service"]
   supports :status => true, :restart => true
-  action :enable
+  action :restart
 end
 
-#status = `ovs-vsctl show`
-#puts "***********ovs-vsctl show output: #{status} +++++++++++"
+status = `ovs-vsctl show`
+puts "***********ovs-vsctl show output: #{status} +++++++++++"
 
 service "quantum-server" do
   service_name platform_options["quantum_server_service"]

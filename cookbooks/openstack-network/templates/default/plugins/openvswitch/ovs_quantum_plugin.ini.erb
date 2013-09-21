@@ -114,7 +114,7 @@ local_ip = <%= @local_ip %>
 #
 # Default: bridge_mappings =
 # Example: bridge_mappings = physnet1:br-eth1
-<% if node["openstack"]["network"]["openvswitch"]["bridge_mappings"] -%>
+<% if node["openstack"]["network"]["openvswitch"]["bridge_mappings"] !="nil" -%>
 bridge_mappings = <%= node["openstack"]["network"]["openvswitch"]["bridge_mappings"] %>
 <% end -%>
 
