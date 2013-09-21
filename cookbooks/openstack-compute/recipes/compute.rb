@@ -41,6 +41,14 @@ if platform?(%w(ubuntu))
   end
 end
 
+if platform?(%w(centos, redhat, fedora))
+  if node["openstack"]["compute"]["libvirt"]["virt_type"] == "qemu"
+    compute_compute_packages << "qemu-kvm"
+  elsif node["openstack"]["compute"]["libvirt"]["virt_type"] == "kvm"
+    compute_compute_packages << "qemu-kvm"
+  end
+end
+
 compute_compute_packages.each do |pkg|
   package pkg do
     options platform_options["package_overrides"]
