@@ -249,6 +249,11 @@ node.override["openstack"]["network"]["service_role"] = node['openstack']['ident
 
 node.override["openstack"]["network"]["api"]["bind_interface"] = mydata['networking']['control']['interface']
 
+node.set['openstack']['networking']['control']['interface'] = mydata['networking']['control']['interface']
+node.set['openstack']['networking']['tenant']['interface'] = mydata['networking']['tenant']['interface']
+node.set['openstack']['networking']['public']['interface'] = mydata['networking']['public']['interface']
+node.set['openstack']['networking']['storage']['interface'] = mydata['networking']['storage']['interface']
+
 
 # ============================= L3 Agent Configuration =====================
 
@@ -347,4 +352,7 @@ node.override["openstack"]["network"]["openvswitch"]["local_ip_interface"] = loc
 # Example: bridge_mappings = physnet1:br-eth1
 node.override["openstack"]["network"]["openvswitch"]["bridge_mappings"] = mydata['networking']['plugins']['ovs']["#{tenant_network_type}"]['bridge_mappings']
 
+
+# #### nova #####
+node.override["openstack"]["compute"]["network"]["service_type"] = mydata['networking']['nova']['network_type']
 

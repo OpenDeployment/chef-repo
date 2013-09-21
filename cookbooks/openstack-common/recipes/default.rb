@@ -96,6 +96,9 @@ when "rhel", "fedora"
 
   # add epel repo
   include_recipe "yum::epel"
+
+  # add repoforge repo
+  # include_recipe "yum::repoforge"  
   
   yum_repository "openstack" do
     description "redhat packages for openstack"  

@@ -68,8 +68,8 @@ service "quantum-openvswitch-switch" do
   action :restart
 end
 
-status = `ovs-vsctl show`
-puts "***********ovs-vsctl show output: #{status} +++++++++++"
+#status = `ovs-vsctl show`
+#puts "***********ovs-vsctl show output: #{status} +++++++++++"
 
 service "quantum-server" do
   service_name platform_options["quantum_server_service"]

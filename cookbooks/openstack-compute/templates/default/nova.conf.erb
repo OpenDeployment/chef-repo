@@ -1,7 +1,6 @@
 <%= node["openstack"]["compute"]["custom_template_banner"] %>
 
 [DEFAULT]
-
 # LOGS/STATE
 debug=<%= node["openstack"]["compute"]["debug"] %>
 verbose=<%= node["openstack"]["compute"]["verbose"] %>
@@ -16,15 +15,15 @@ state_path=/var/lib/nova
 lock_path=/var/lock/nova
 
 ##### RABBITMQ #####
-rabbit_userid=<%= node["openstack"]["compute"]["rabbit"]["username"] %>
-rabbit_password=<%= @rabbit_password %>
+rabbit_userid=<%= node['openstack']['mq']['user'] %>
+rabbit_password=<%= node['openstack']['mq']['password'] %>
 rabbit_virtual_host=<%= node["openstack"]["compute"]["rabbit"]["vhost"] %>
 <% if node["openstack"]["compute"]["rabbit"]["ha"] -%>
 rabbit_hosts=<%= @rabbit_hosts %>
 rabbit_ha_queues=True
 <% else -%>
-rabbit_host=<%= node["openstack"]["compute"]["rabbit"]["host"] %>
-rabbit_port=<%= node["openstack"]["compute"]["rabbit"]["port"] %>
+rabbit_host=<%= node['openstack']['mq']['bind_address'] %>
+rabbit_port=<%= node['openstack']['mq']['port'] %>
 <% end -%>
 
 ##### SCHEDULER #####
@@ -38,12 +37,9 @@ default_schedule_zone=<%= node["openstack"]["compute"]["config"]["default_schedu
 storage_availability_zone=<%= node["openstack"]["compute"]["config"]["storage_availability_zone"] %>
 
 ##### NETWORK #####
-
-
 <% case node["openstack"]["compute"]["network"]["service_type"]
 
 when "quantum" -%>
-
 # N.B. due to https://bugs.launchpad.net/nova/+bug/1206330
 # we override the endpoint scheme below, ignore the port
 # and essentially force http
@@ -54,9 +50,9 @@ quantum_url=http://<%= @network_endpoint.host %>:<%= @network_endpoint.port %>
 <% end -%>
 network_api_class=<%= node["openstack"]["compute"]["network"]["quantum"]["network_api_class"]  %>
 quantum_auth_strategy=<%= node["openstack"]["compute"]["network"]["quantum"]["auth_strategy"] %>
-quantum_admin_tenant_name=<%= node["openstack"]["compute"]["network"]["quantum"]["admin_tenant_name"] %>
-quantum_admin_username=<%= node["openstack"]["compute"]["network"]["quantum"]["admin_username"] %>
-quantum_admin_password=<%= @quantum_admin_password %>
+quantum_admin_tenant_name=<%= node['openstack']['identity']['network']['tenant'] %>
+quantum_admin_username=<%= node['openstack']['identity']['network']['username'] %>
+quantum_admin_password=<%= node['openstack']['identity']['network']['password'] %>
 quantum_admin_auth_url=<%= @identity_endpoint.to_s %>
 libvirt_vif_driver=<%= node["openstack"]["compute"]["network"]["quantum"]["libvirt_vif_driver"] %>
 linuxnet_interface_driver=<%= node["openstack"]["compute"]["network"]["quantum"]["linuxnet_interface_driver"] %>
@@ -116,15 +112,15 @@ checksum_base_images=<%= node["openstack"]["compute"]["libvirt"]["checksum_base_
 
 ##### VNCPROXY #####
 novncproxy_base_url=<%= @novncproxy_base_url %>
-xvpvncproxy_base_url=<%= @xvpvncproxy_base_url %>
+#xvpvncproxy_base_url=<%= @xvpvncproxy_base_url %>
 
 # This is only required on the server running xvpvncproxy
-xvpvncproxy_host=<%= @xvpvncproxy_bind_host %>
-xvpvncproxy_port=<%= node["openstack"]["compute"]["xvpvnc_proxy"]["service_port"] %>
+# xvpvncproxy_host=<%= node['openstack']['endpoints']['compute-xvpvnc']['host'] %>
+# xvpvncproxy_port=<%= node['openstack']['endpoints']['compute-xvpvnc']['port'] %>
 
 # This is only required on the server running novncproxy
-novncproxy_host=<%= @novncproxy_bind_host %>
-novncproxy_port=<%= node["openstack"]["compute"]["novnc_proxy"]["service_port"] %>
+#novncproxy_host=<%= node['openstack']['endpoints']['compute-novnc']['host'] %>
+novncproxy_port=<%= node['openstack']['endpoints']['compute-novnc']['port'] %>
 
 vncserver_listen=<%= @vncserver_listen %>
 vncserver_proxyclient_address=<%= @vncserver_proxyclient_address %>

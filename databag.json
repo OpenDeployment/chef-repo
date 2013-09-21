@@ -37,7 +37,7 @@
     },
     "networking": {
         "control": {
-            "interface": "lo"
+            "interface": "eth0"
         },
         "tenant": {
             "interface": "eth0"
@@ -47,6 +47,9 @@
         },
         "storage": {
             "interface": "eth0"
+        },
+        "nova": {
+            "network_type": "quantum"
         },
         "plugins": {
             "ovs": {

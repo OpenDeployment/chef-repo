@@ -110,16 +110,23 @@ Chef::Log.debug("openstack-compute::nova-common:ec2_public_endpoint|#{ec2_public
 Chef::Log.debug("openstack-compute::nova-common:network_endpoint|#{network_endpoint.to_s}")
 Chef::Log.debug("openstack-compute::nova-common:image_endpoint|#{image_endpoint.to_s}")
 
-vnc_bind_ip = address_for node["openstack"]["compute"]["libvirt"]["bind_interface"]
+vnc_bind_ip = address_for node['openstack']['networking']['control']['interface']
 xvpvnc_proxy_ip = address_for node["openstack"]["compute"]["xvpvnc_proxy"]["bind_interface"]
 novnc_proxy_ip = address_for node["openstack"]["compute"]["novnc_proxy"]["bind_interface"]
 
 if node["openstack"]["compute"]["network"]["service_type"] == "quantum"
-  quantum_admin_password = service_password "openstack-network"
-  quantum_metadata_proxy_shared_secret = secret "secrets", "quantum_metadata_secret"
+  quantum_admin_password = service_password node['openstack']['identity']['network']['password']
+  quantum_metadata_proxy_shared_secret = secret "secrets", node["openstack"]["network"]["metadata"]["secret_name"]
 else
   quantum_admin_password = nil
   quantum_metadata_proxy_shared_secret = nil
+end
+
+virtualization = `egrep '(vmx|svm)' --color=always /proc/cpuinfo >/dev/null;echo $?`.delete("\n")
+if virtualization.eql?("1")
+  node.override["openstack"]["compute"]["libvirt"]["virt_type"] = "qemu"
+else
+  node.override["openstack"]["compute"]["libvirt"]["virt_type"] = "kvm"
 end
 
 template "/etc/nova/nova.conf" do
