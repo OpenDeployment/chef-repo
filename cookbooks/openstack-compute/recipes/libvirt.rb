@@ -142,8 +142,10 @@ link "/usr/bin/qemu-system-x86_64" do
   only_if { platform? %w{fedora redhat centos} }
 end
 
-service "dbus" do
-  action [:enable, :start]
+if node['platform_family'] != "rhel"
+  service "dbus" do
+    action [:enable, :start]
+  end
 end
 
 service "libvirt-bin" do

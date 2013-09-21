@@ -126,16 +126,6 @@ end
 virtualization = `egrep '(vmx|svm)' --color=always /proc/cpuinfo >/dev/null;echo $?`.delete("\n")
 if virtualization.eql?("1")
   node.override["openstack"]["compute"]["libvirt"]["virt_type"] = "qemu"
-  case node['platform']
-  when "centos", "redhat", "fedora"
-    package "qemu-kvm" do
-      action :install
-    end
-  when "ubuntu"
-    package "nova-compute-qemu" do
-      action :install
-    end
-  end
 else
   node.override["openstack"]["compute"]["libvirt"]["virt_type"] = "kvm"
 end
