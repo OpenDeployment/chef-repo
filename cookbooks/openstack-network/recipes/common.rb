@@ -165,6 +165,7 @@ template "/etc/quantum/quantum.conf" do
   notifies :restart, "service[quantum-server]", :delayed
 end
 
+
 template "/etc/quantum/api-paste.ini" do
   source "api-paste.ini.erb"
   owner node["openstack"]["network"]["platform"]["user"]
@@ -369,6 +370,13 @@ when "ryu"
     notifies :restart, "service[quantum-server]", :delayed
   end
 
+end
+
+if node['openstack']['mq']['service_type'] == "rabbitmq"
+  execute "delete rpc_backend qpid" do
+    command  %Q|sed -i "s/rpc_backend = quantum.openstack.common.rpc.impl_qpid//g" /etc/quantum/quantum.conf|
+    action :run
+  end
 end
 
 template "/etc/default/quantum-server" do

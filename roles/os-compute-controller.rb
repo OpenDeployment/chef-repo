@@ -6,5 +6,6 @@ run_list(
   "role[os-compute-scheduler]",
   "role[os-compute-cert]",
   "role[os-compute-vncproxy]",
+  "recipe[openstack-compute::conductor]",
   "recipe[openstack-compute::nova-setup]"
   )

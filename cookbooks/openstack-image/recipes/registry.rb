@@ -34,15 +34,14 @@ end
 
 #db_user = node["openstack"]["image"]["db"]["username"]
 #db_pass = db_password "glance"
-mydata = data_bag_item('openstack','env_default')
-db_user = mydata['credential']['mysql']['image']['username']
-db_pass = db_password "#{mydata['credential']['mysql']['image']['password']}"
+db_user = node['openstack']['db']['image']['username']
+db_pass = db_password node['openstack']['db']['image']['password']
 
 sql_connection = db_uri("image", db_user, db_pass)
 
 identity_endpoint = endpoint "identity-admin"
 registry_endpoint = endpoint "image-registry"
-service_pass = service_password "openstack-image"
+service_pass = service_password node['openstack']['identity']['image']['password']
 
 package "curl" do
   action :install
