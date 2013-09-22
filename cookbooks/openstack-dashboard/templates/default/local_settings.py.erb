@@ -13,7 +13,8 @@ TEMPLATE_DEBUG = DEBUG
 WEBROOT=''
 LOGIN_URL = WEBROOT+'/auth/login/'
 LOGOUT_URL = WEBROOT+'/auth/logout/'
-LOGIN_REDIRECT_URL = WEBROOT+'/syspanel'
+#LOGIN_REDIRECT_URL = WEBROOT+'/syspanel'
+LOGIN_REDIRECT_URL = WEBROOT+'/'
 <% end %>
 
 <% if node["openstack"]["dashboard"]["ssl_offload"] %>
