@@ -28,7 +28,7 @@ dhcp_driver = <%= node["openstack"]["network"]["dhcp_driver"] %>
 
 # Allow overlapping IP (Must have kernel build with CONFIG_NET_NS=y and
 # iproute2 package that supports namespaces).
-#use_namespaces = <%= node["openstack"]["network"]["use_namespaces"] %>
+use_namespaces = <%= node["openstack"]["network"]["use_namespaces"] %>
 
 # The DHCP server can assist with providing metadata support on isolated
 # networks. Setting this value to True will cause the DHCP server to append

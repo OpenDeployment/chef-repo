@@ -80,8 +80,9 @@ if node.run_list.roles.include?(identity_service_role)
   # if role is on this node,  just return the node hash
   keystone = node
 else
+  keystone = node
   # otherwise go searching
-  keystone = search_for(identity_service_role).first
+  # keystone = search_for(identity_service_role).first
 end
 
 ksadmin_tenant_name = keystone["openstack"]["identity"]["admin_tenant_name"]

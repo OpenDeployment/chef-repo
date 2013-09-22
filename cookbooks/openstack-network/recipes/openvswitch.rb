@@ -68,8 +68,6 @@ service "quantum-openvswitch-switch" do
   action :restart
 end
 
-#status = `ovs-vsctl show`
-#puts "***********ovs-vsctl show output: #{status} +++++++++++"
 
 service "quantum-server" do
   service_name platform_options["quantum_server_service"]
@@ -91,13 +89,14 @@ service "quantum-plugin-openvswitch-agent" do
   action :enable
 end
 
+execute "chkconfig openvswitch on" do
+  only_if { platform?(%w(fedora redhat centos)) } 
+end
 
 execute "quantum-node-setup --plugin openvswitch" do
   only_if { platform?(%w(fedora redhat centos)) } # :pragma-foodcritic: ~FC024 - won't fix this
 end
 
-#status = `ovs-vsctl show`
-#puts "***********ovs-vsctl show output: #{status} +++++++++++"
 
 if not ["nicira", "plumgrid", "bigswitch"].include?(main_plugin)
   int_bridge = node["openstack"]["network"]["openvswitch"]["integration_bridge"]

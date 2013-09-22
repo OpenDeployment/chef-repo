@@ -63,7 +63,7 @@ default["openstack"]["compute"]["network"]["service_type"] = "nova"
 
 # if the network type is not nova, we will load the following
 # plugins from openstack-network
-default["openstack"]["compute"]["network"]["plugins"] = ["openvswitch", "dhcp_agent"]
+default["openstack"]["compute"]["network"]["plugins"] = ["openvswitch"]
 
 # Quantum options
 default["openstack"]["compute"]["network"]["quantum"]["network_api_class"] = "nova.network.quantumv2.api.API"
@@ -271,8 +271,8 @@ when "fedora", "redhat", "centos", "suse" # :pragma-foodcritic: ~FC024 - won't f
     "compute_vncproxy_packages" => ["openstack-nova-novncproxy"], # me thinks this is right?
     "compute_vncproxy_service" => "openstack-nova-novncproxy",
     "compute_vncproxy_consoleauth_packages" => ["openstack-nova-console"],
-    "compute_vncproxy_consoleauth_service" => "openstack-nova-console",
-    "compute_vncproxy_consoleauth_process_name" => "nova-console",
+    "compute_vncproxy_consoleauth_service" => "openstack-nova-consoleauth",
+    "compute_vncproxy_consoleauth_process_name" => "nova-consoleauth",
     "libvirt_packages" => ["libvirt"],
     "libvirt_service" => "libvirtd",
     "compute_cert_packages" => ["openstack-nova-cert"],

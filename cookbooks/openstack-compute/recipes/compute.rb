@@ -71,7 +71,7 @@ end
 cookbook_file "/etc/nova/nova-compute.conf" do
   source "nova-compute.conf"
   mode   00644
-
+  retries 5
   action :create
 end
 

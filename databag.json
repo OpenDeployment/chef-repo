@@ -43,7 +43,7 @@
             "interface": "eth0"
         },
         "public": {
-            "interface": "eth2"
+            "interface": "eth1"
         },
         "storage": {
             "interface": "eth0"
@@ -76,7 +76,7 @@
         }
     },
     "ntp": {
-        "ntpserver": "127.0.0.1"
+        "ntpserver": "0.centos.pool.ntp.org"
     },
     "db": {
         "service_type": "mysql",
