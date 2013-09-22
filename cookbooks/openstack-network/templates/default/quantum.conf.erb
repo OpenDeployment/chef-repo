@@ -8,7 +8,7 @@ verbose = <%= node["openstack"]["network"]["verbose"] %>
 
 # Where to store Quantum state files.  This directory must be writable by the
 # user executing the agent.
-# state_path = /var/lib/quantum
+state_path = /var/lib/quantum
 
 # Where to store lock files
 lock_path = $state_path/lock

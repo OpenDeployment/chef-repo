@@ -81,14 +81,14 @@
     "db": {
         "service_type": "mysql",
         "mysql": {
-            "bind_address": "10.145.88.230",
+            "bind_address": "10.145.88.231",
             "port": "3306"
         }        
     },
     "mq": {
         "service_type": "rabbitmq",
         "rabbitmq": {
-            "bind_address": "10.145.88.230",
+            "bind_address": "10.145.88.231",
             "port": "5672"
         }
     },
@@ -191,67 +191,67 @@
     "endpoints": {
         "identity": {
             "service": {
-                "host": "10.145.88.230",
+                "host": "10.145.88.231",
                 "scheme": "http"
             },
             "admin": {
-                "host": "10.145.88.230",
+                "host": "10.145.88.231",
                 "scheme": "http"
             }
         },
         "compute": {
             "service": {
-                "host": "10.145.88.230",
+                "host": "10.145.88.231",
                 "scheme": "http"
             },
             "novnc": {
-                "host": "10.145.88.230",
+                "host": "10.145.88.231",
                 "scheme": "http"
             },
             "xvpvnc": {
-                "host": "10.145.88.230",
+                "host": "10.145.88.231",
                 "scheme": "http"
             },
             "metadata": {
-                "host": "10.145.88.230",
+                "host": "10.145.88.231",
                 "scheme": "http"
             }
         },
         "ec2": {
             "service": {
-                "host": "10.145.88.230",
+                "host": "10.145.88.231",
                 "scheme": "http"
             },
             "admin": {
-                "host": "10.145.88.230",
+                "host": "10.145.88.231",
                 "scheme": "http"
             }            
         },
         "network": {
             "service": {
-                "host": "10.145.88.230",
+                "host": "10.145.88.231",
                 "scheme": "http"
             }
         },
         "image": {
             "service": {
-                "host": "10.145.88.230",
+                "host": "10.145.88.231",
                 "scheme": "http"
             },
             "registry": {
-                "host": "10.145.88.230",
+                "host": "10.145.88.231",
                 "scheme": "http"
             }
         },
         "volume": {
             "service": {
-                "host": "10.145.88.230",
+                "host": "10.145.88.231",
                 "scheme": "http"
             }
         },
         "metering": {
             "service": {
-                "host": "10.145.88.230",
+                "host": "10.145.88.231",
                 "scheme": "http"
             }
         }
