@@ -31,8 +31,6 @@ end
 
 myitem = node.attribute?('cluster')? node['cluster']:"env_default"
 
-puts "************* myitem = #{myitem} ****************"
-
 if !search(defaultbag, "id:#{myitem}")
     Chef::Application.fatal!("databagitem '#{myitem}' doesn't exist.")
     return

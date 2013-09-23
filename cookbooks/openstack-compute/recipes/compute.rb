@@ -23,7 +23,7 @@ class ::Chef::Recipe
 end
 
 include_recipe "openstack-compute::nova-common"
-include_recipe "openstack-compute::api-metadata"
+# include_recipe "openstack-compute::api-metadata"
 unless node.run_list.include? "openstack-network::server"
   include_recipe "openstack-compute::network"
 end
