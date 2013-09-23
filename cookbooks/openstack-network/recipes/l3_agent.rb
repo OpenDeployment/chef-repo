@@ -24,8 +24,6 @@ driver_name = node["openstack"]["network"]["interface_driver"].split('.').last.d
 main_plugin = node["openstack"]["network"]["interface_driver_map"][driver_name]
 
 # Sam added the if case, cannot find the independent l3-agent packages at centos 6.4
-if node['platform_family'] != "rhel"
-
 platform_options["quantum_l3_packages"].each do |pkg|
   package pkg do
     options platform_options["package_overrides"]
@@ -47,8 +45,6 @@ execute "quantum-l3-setup --plugin #{main_plugin}" do
     platform?(%w(fedora redhat centos)) and not # :pragma-foodcritic: ~FC024 - won't fix this
     ["nicira", "plumgrid", "bigswitch"].include?(main_plugin)
   }
-end
-
 end
 
 template "/etc/quantum/l3_agent.ini" do

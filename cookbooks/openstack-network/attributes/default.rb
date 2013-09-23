@@ -715,7 +715,7 @@ when "fedora", "redhat", "centos" # :pragma-foodcritic: ~FC024 - won't fix this
     "quantum_client_packages" => [],
     "quantum_dhcp_packages" => [ "openstack-quantum" ],
     "quantum_dhcp_build_packages" => [],
-    "quantum_l3_packages" => [ "quantum-l3-agent" ],
+    "quantum_l3_packages" => [ "openstack-quantum" ],
     "quantum_openvswitch_packages" => ["openvswitch", "bridge-utils"],
     "quantum_openvswitch_agent_packages" => ["openstack-quantum-openvswitch"],
     "quantum_linuxbridge_agent_packages" => ["openstack-quantum-linuxbridge"],
