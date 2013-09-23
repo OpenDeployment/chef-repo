@@ -29,11 +29,12 @@ if !Chef::DataBag.list.key?(defaultbag)
     return
 end
 
-myitem = 'env_default'.freeze if defined?("#{node[mycluster]}")
+myitem = node.attribute?('cluster')? node['cluster']:"env_default"
 
+puts "************* myitem = #{myitem} ****************"
 
 if !search(defaultbag, "id:#{myitem}")
-    Chef::Application.fatal!("databagitem '#{databagitem}' doesn't exist.")
+    Chef::Application.fatal!("databagitem '#{myitem}' doesn't exist.")
     return
 end
 
