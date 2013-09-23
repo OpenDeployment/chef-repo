@@ -41,6 +41,7 @@ service "quantum-l3-agent" do
 end
 
 execute "quantum-l3-setup --plugin #{main_plugin}" do
+  notifies :run, "execute[delete_auto_qpid]", :immediately
   only_if {
     platform?(%w(fedora redhat centos)) and not # :pragma-foodcritic: ~FC024 - won't fix this
     ["nicira", "plumgrid", "bigswitch"].include?(main_plugin)

@@ -95,13 +95,7 @@ end
 
 execute "quantum-node-setup --plugin openvswitch" do
   only_if { platform?(%w(fedora redhat centos)) } # :pragma-foodcritic: ~FC024 - won't fix this
-end
-
-if node['openstack']['mq']['service_type'] == "rabbitmq"
-  execute "delete rpc_backend qpid" do
-    command  %Q|sed -i "s/^rpc_backend = quantum.openstack.common.rpc.impl_qpid//g" /etc/quantum/quantum.conf|
-    action :run
-  end
+  notifies :run, "execute[delete_auto_qpid]", :immediately
 end
 
 if not ["nicira", "plumgrid", "bigswitch"].include?(main_plugin)

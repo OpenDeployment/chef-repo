@@ -94,6 +94,21 @@ template "/etc/quantum/policy.json" do
   notifies :restart, "service[quantum-server]", :delayed
 end
 
+# Add by Sam, CentOS think Qpid as it's default queue, it will auto add qpid
+# configuration at /etc/quantum/quantum.conf when invoke quantum-xxx-setup, 
+# because these scripts was hard coded a line as below:
+# "openstack-config --set ${Q_CONF} DEFAULT rpc_backend 
+#                                 quantum.openstack.common.rpc.impl_qpid"
+# It should be a bug of redhat OS.
+execute "delete_auto_qpid" do
+  command  %Q|sed -i "s/^rpc_backend = quantum.openstack.common.rpc.impl_qpid//g" /etc/quantum/quantum.conf|
+  only_if {
+    (node['openstack']['mq']['service_type'] == "rabbitmq") and 
+    platform?(%w{fedora centos redhat}) 
+  }
+  action :nothing
+end
+
 rabbit_server_role = node["openstack"]["network"]["rabbit_server_chef_role"]
 if node["openstack"]["network"]["rabbit"]["ha"]
   rabbit_hosts = rabbit_servers
