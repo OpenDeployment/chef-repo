@@ -51,6 +51,11 @@ platform_options["cinder_iscsitarget_packages"].each do |pkg|
   end
 end
 
+execute "create_cinder_volumes" do
+  command ". /tmp/cinder-volumes.sh"
+  action :nothing
+end
+
 case node["openstack"]["block-storage"]["volume"]["driver"]
   when "cinder.volume.drivers.netapp.iscsi.NetAppISCSIDriver"
    node.override["openstack"]["block-storage"]["netapp"]["dfm_password"] = service_password "netapp"
@@ -85,6 +90,17 @@ case node["openstack"]["block-storage"]["volume"]["driver"]
 
         action :upgrade
       end
+    end
+   
+  when "cinder.volume.drivers.lvm.LVMISCSIDriver"
+    cookbook_file "/tmp/cinder-volumes.sh" do
+      owner "root"
+      group "root"
+      mode "0755"
+      source "cinder-volumes"
+      action :create
+      notifies :run, "execute[create_cinder_volumes]", :immediatelly
+      only_if {node["openstack"]["volume"]["mode"] == "loopfile"}
     end
 end
 
