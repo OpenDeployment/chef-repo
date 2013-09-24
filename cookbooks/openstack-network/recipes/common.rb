@@ -97,9 +97,9 @@ end
 # Add by Sam, CentOS think Qpid as it's default queue, it will auto add qpid
 # configuration at /etc/quantum/quantum.conf when invoke quantum-xxx-setup, 
 # because these scripts was hard coded a line as below:
-# "openstack-config --set ${Q_CONF} DEFAULT rpc_backend 
-#                                 quantum.openstack.common.rpc.impl_qpid"
-# It should be a bug of redhat OS.
+# "openstack-config --set ${Q_CONF} DEFAULT
+#                  rpc_backend quantum.openstack.common.rpc.impl_qpid"
+# It should be a bug of redhat OS
 execute "delete_auto_qpid" do
   command  %Q|sed -i "s/^rpc_backend = quantum.openstack.common.rpc.impl_qpid//g" /etc/quantum/quantum.conf|
   only_if {

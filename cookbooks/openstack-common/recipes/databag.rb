@@ -164,6 +164,8 @@ node.override['openstack']['db']['service_type'] = mydata['db']['service_type']
 node.override['openstack']['db']['bind_address'] = mydata['db']["#{node['openstack']['db']['service_type']}"]['bind_address']
 node.override['openstack']['db']['port'] = mydata['db']["#{node['openstack']['db']['service_type']}"]['port']
 
+node.override['openstack']['db']['super']['username'] = mydata['credential']["#{node['openstack']['db']['service_type']}"]['super']['username']
+node.override['openstack']['db']['super']['password'] = mydata['credential']["#{node['openstack']['db']['service_type']}"]['super']['password']
 
 # Database used by the OpenStack Compute (Nova) service
 node.override['openstack']['db']['compute']['db_type'] = node['openstack']['db']['service_type']

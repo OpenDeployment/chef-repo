@@ -21,48 +21,45 @@ class ::Chef::Recipe
   include ::Openstack
 end
 
-# sam added
-mydata = data_bag_item('openstack','env_default')
-
-
 db_create_with_user(
   "compute",
   node["openstack"]["db"]["compute"]["username"],
-  db_password("#{mydata['credential']['mysql']['compute']['password']}")
+  db_password(node['openstack']['db']['compute']['password'])
 )
 
 db_create_with_user(
   "dashboard",
   node["openstack"]["db"]["dashboard"]["username"],
-  db_password("#{mydata['credential']['mysql']['dashboard']['password']}")
+  db_password(node['openstack']['db']['dashboard']['password'])
 )
 
 db_create_with_user(
   "identity",
   node["openstack"]["db"]["identity"]["username"],
-  db_password("#{mydata['credential']['mysql']['identity']['password']}")
+  db_password(node['openstack']['db']['identity']['password'])
 )
 
 db_create_with_user(
   "image",
   node["openstack"]["db"]["image"]["username"],
-  db_password("#{mydata['credential']['mysql']['image']['password']}")
+  db_password(node['openstack']['db']['image']['password'])
 )
 
 db_create_with_user(
   "metering",
   node["openstack"]["db"]["metering"]["username"],
-  db_password("#{mydata['credential']['mysql']['metering']['password']}")
+  db_password(node['openstack']['db']['metering']['password'])
 )
 
 db_create_with_user(
   "network",
   node["openstack"]["db"]["network"]["username"],
-  db_password("#{mydata['credential']['mysql']['network']['password']}")
+  db_password(node['openstack']['db']['network']['password'])
 )
 
 db_create_with_user(
   "volume",
   node["openstack"]["db"]["volume"]["username"],
-  db_password("#{mydata['credential']['mysql']['volume']['password']}")
+  db_password(node['openstack']['db']['volume']['password'])
 )
+

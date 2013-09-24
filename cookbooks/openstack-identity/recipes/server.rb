@@ -105,9 +105,8 @@ volume_endpoint = endpoint "volume-api"
 
 #db_user = node["openstack"]["identity"]["db"]["username"]
 #db_pass = db_password "keystone"
-mydata = data_bag_item('openstack','env_default')
-db_user = mydata['credential']['mysql']['identity']['username']
-db_pass = db_password "#{mydata['credential']['mysql']['identity']['password']}"
+db_user = node['openstack']['db']['identity']['username']
+db_pass = db_password node['openstack']['db']['identity']['password'] 
 
 sql_connection = db_uri("identity", db_user, db_pass)
 

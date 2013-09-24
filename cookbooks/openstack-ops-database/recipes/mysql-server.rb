@@ -19,15 +19,11 @@
 #
 
 # override default attributes in the upstream mysql cookbook
-myitem = 'env_default'.freeze if defined?("#{node[mycluster]}")
-mydata = data_bag_item('openstack', myitem)
-
-node.set['mysql']['bind_address'] = mydata['db']["#{node['openstack']['db']['service_type']}"]['bind_address']
-  node.set['mysql']['server_debian_password'] = mydata['credential']['mysql']['super']['password']
-node.set['mysql']['server_root_password']   = mydata['credential']['mysql']['super']['password']
-node.set['mysql']['server_repl_password']   = mydata['credential']['mysql']['super']['password']
+node.set['mysql']['bind_address'] = node['openstack']['db']['bind_address']
+node.set['mysql']['server_debian_password'] = node['openstack']['db']['super']['password']
+node.set['mysql']['server_root_password']   = node['openstack']['db']['super']['password']
+node.set['mysql']['server_repl_password']   = node['openstack']['db']['super']['password']
   
-#node.set["mysql"]["bind_address"] = bind_ip = "0.0.0.0"
 node.set['mysql']['tunable']['innodb_thread_concurrency']       = "0"
 node.set['mysql']['tunable']['innodb_commit_concurrency']       = "0"
 node.set['mysql']['tunable']['innodb_read_io_threads']          = "4"
