@@ -49,7 +49,7 @@ end
 # removing insecure default mysql users
 mysql_database_user 'drop empty hostname user' do
   username ''
-  host node.hostname
+  host "#{node.hostname}"
   connection mysql_connection_info
   action :drop
 end

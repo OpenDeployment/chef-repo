@@ -17,6 +17,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+require "uri"
 
 class ::Chef::Recipe
   include ::Openstack
@@ -32,8 +33,6 @@ package "python-keystone" do
   action :install
 end
 
-#db_user = node["openstack"]["image"]["db"]["username"]
-#db_pass = db_password "glance"
 db_user = node['openstack']['db']['image']['username']
 db_pass = db_password node['openstack']['db']['image']['password']
 
@@ -123,4 +122,27 @@ template "/etc/glance/glance-registry-paste.ini" do
   mode   00644
 
   notifies :restart, "service[image-registry]", :immediately
+end
+
+execute "tinyimage" do
+  command "sh /tmp/tinyimage.sh"
+  action :nothing
+end
+
+identity_endpoint = endpoint "identity-api"
+auth_uri = ::URI.decode identity_endpoint.to_s
+
+template "/tmp/tinyimage.sh" do
+    source "tinyimage.sh.erb"
+    owner "root"
+    group "root"
+    mode  00755
+    variables( 
+      :os_username => node['openstack']['identity']['admin_user'], 
+      :os_password => node['openstack']['identity']['admin_password'],
+      :os_tenant_name => node['openstack']['identity']['admin_tenant_name'],
+      :os_auth_url => auth_uri
+    )
+
+    notifies :run, "execute[tinyimage]", :delayed
 end

@@ -58,10 +58,14 @@ action :add do
 
     #download the file if necessary
     unless new_resource.url.nil?
-      remote_file "/etc/pki/rpm-gpg/#{new_resource.key}" do
-        source new_resource.url
-        mode "0644"
-        notifies :run, "execute[import-rpm-gpg-key-#{new_resource.key}]", :immediately
+      # remote_file "/etc/pki/rpm-gpg/#{new_resource.key}" do
+      #   source new_resource.url
+      #   mode "0644"
+      #   notifies :run, "execute[import-rpm-gpg-key-#{new_resource.key}]", :immediately
+      # end
+      cookbook_file "/etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6" do
+        source "RPM-GPG-KEY-EPEL-6"
+        mode 0644
       end
     end
 
