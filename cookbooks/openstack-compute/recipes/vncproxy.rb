@@ -47,6 +47,13 @@ service proxy_service do
   action :enable
 end
 
+service "nova-console" do
+  service_name platform_options["compute_vncproxy_console_service"]
+  supports :status => true, :restart => true
+  subscribes :restart, resources("template[/etc/nova/nova.conf]")
+  action [:enable, :start]
+end
+
 service "nova-consoleauth" do
   service_name platform_options["compute_vncproxy_consoleauth_service"]
   supports :status => true, :restart => true

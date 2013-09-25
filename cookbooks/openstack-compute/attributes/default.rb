@@ -270,6 +270,9 @@ when "fedora", "redhat", "centos", "suse" # :pragma-foodcritic: ~FC024 - won't f
     "compute_conductor_service" => "openstack-nova-conductor",
     "compute_vncproxy_packages" => ["openstack-nova-novncproxy"], # me thinks this is right?
     "compute_vncproxy_service" => "openstack-nova-novncproxy",
+    "compute_vncproxy_console_packages" => ["openstack-nova-console"],
+    "compute_vncproxy_console_service" => "openstack-nova-console",
+    "compute_vncproxy_console_process_name" => "nova-console",
     "compute_vncproxy_consoleauth_packages" => ["openstack-nova-console"],
     "compute_vncproxy_consoleauth_service" => "openstack-nova-consoleauth",
     "compute_vncproxy_consoleauth_process_name" => "nova-consoleauth",
