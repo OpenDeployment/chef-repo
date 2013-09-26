@@ -26,6 +26,7 @@ end
 
 include_recipe "openstack-block-storage::cinder-common"
 
+puts "***************** openstack-block-storage:: volume *********************"
 platform_options = node["openstack"]["block-storage"]["platform"]
 
 platform_options["cinder_volume_packages"].each do |pkg|
@@ -52,9 +53,13 @@ platform_options["cinder_iscsitarget_packages"].each do |pkg|
 end
 
 execute "create_cinder_volumes" do
-  command "sh /tmp/cinder-volumes.sh"
+  command "sh /tmp/cinder_volumes.sh"
   action :nothing
 end
+
+
+puts "****node['openstack']['volume']['mode'] = #{node['openstack']['volume']['mode']}*************"
+puts "****node['openstack']['block-storage']['volume']['driver']= #{node['openstack']['block-storage']['volume']['driver']}*****"
 
 case node["openstack"]["block-storage"]["volume"]["driver"]
   when "cinder.volume.drivers.netapp.iscsi.NetAppISCSIDriver"
@@ -93,14 +98,17 @@ case node["openstack"]["block-storage"]["volume"]["driver"]
     end
    
   when "cinder.volume.drivers.lvm.LVMISCSIDriver"
-    cookbook_file "/tmp/cinder-volumes.sh" do
+    puts %Q|****node["openstack"]["volume"]["mode"] = #{node["openstack"]["volume"]["mode"]}*************|
+    template "/tmp/cinder_volumes.sh" do
+      source "cinder_volumes.sh.erb"
       owner "root"
       group "root"
-      mode "0755"
-      source "cinder-volumes"
-      action :create
+      mode  00755
+      variables( 
+        :volumesize => node["openstack"]["volume"]["size"]
+      )
       notifies :run, "execute[create_cinder_volumes]", :delayed
-      only_if {node["openstack"]["volume"]["mode"] == "loopfile"}
+      only_if { node["openstack"]["volume"]["mode"] == "loopfile" }
     end
 end
 

@@ -113,6 +113,8 @@ default["openstack"]["block-storage"]["volume"]["driver"] = "cinder.volume.drive
 default["openstack"]["block-storage"]["volume"]["volume_group"] = "cinder-volumes"
 default["openstack"]["block-storage"]["volume"]["iscsi_helper"] = "tgtadm"
 default["openstack"]["volume"]["mode"] = "loopfile"
+default["openstack"]["volume"]["size"] = "3G"
+
 
 # Ceph/RADOS options
 default["openstack"]["block-storage"]["rbd_pool"] = "rbd"

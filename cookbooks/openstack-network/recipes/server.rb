@@ -63,7 +63,7 @@ end
 service "quantum-server" do
   service_name platform_options["quantum_server_service"]
   supports :status => true, :restart => true
-  action :enable
+  action [ :enable, :restart ]
 end
 
 cookbook_file "quantum-ha-tool" do
