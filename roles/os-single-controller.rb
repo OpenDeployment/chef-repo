@@ -8,11 +8,11 @@ run_list(
   "role[os-image]",
   "role[os-network-server]",
   "role[os-block-storage]",
+  "role[os-compute-scheduler]",
   "role[os-compute-api]",
-  "role[os-compute-scheduler]",  
+  "recipe[openstack-compute::conductor]",
+  "recipe[openstack-compute::nova-setup]",  
   "role[os-compute-cert]",
   "role[os-compute-vncproxy]",
-  "recipe[openstack-compute::conductor]",
-  "recipe[openstack-compute::nova-setup]",
   "role[os-dashboard]"
   )
