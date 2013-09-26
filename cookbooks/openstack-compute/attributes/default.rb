@@ -14,7 +14,7 @@ default["openstack"]["compute"]["custom_template_banner"] = "
 # that Nova uses
 default["openstack"]["compute"]["rabbit_server_chef_role"] = "os-ops-messaging"
 
-default["openstack"]["compute"]["verbose"] = True"
+default["openstack"]["compute"]["verbose"] = "True"
 default["openstack"]["compute"]["debug"] = "True"
 
 # The name of the Chef role that sets up the Keystone Service API
