@@ -110,14 +110,29 @@ if not ["nicira", "plumgrid", "bigswitch"].include?(main_plugin)
 end
 
 if not ["nicira", "plumgrid", "bigswitch"].include?(main_plugin)
-  tun_bridge = node["openstack"]["network"]["openvswitch"]["tunnel_bridge"]
-  execute "create tunnel network bridge" do
-    ignore_failure true
-    command "ovs-vsctl add-br #{tun_bridge}"
-    action :run
-    not_if "ovs-vsctl show | grep 'Bridge #{tun_bridge}'"
-    notifies :restart, "service[quantum-plugin-openvswitch-agent]", :delayed
+  if node["openstack"]["network"]["openvswitch"]["tenant_network_type"] == 'gre'
+    tun_bridge = node["openstack"]["network"]["openvswitch"]["tunnel_bridge"]
+    execute "create tunnel network bridge" do
+      ignore_failure true
+      command "ovs-vsctl add-br #{tun_bridge}"
+      action :run
+      not_if "ovs-vsctl show | grep 'Bridge #{tun_bridge}'"
+      notifies :restart, "service[quantum-plugin-openvswitch-agent]", :delayed
+    end
   end
+    
+  if node["openstack"]["network"]["openvswitch"]["tenant_network_type"] == 'vlan'
+    ethernet=node['openstack']['networking']['tenant']['interface']
+    bridge_mappings = node["openstack"]["network"]["openvswitch"]["bridge_mappings"]
+    bridge = bridge_mappings.split(":").map(&:strip).reject(&:empty?)[1]
+    execute "create tunnel network bridge" do
+      ignore_failure true
+      command "ovs-vsctl add-br #{bridge};ovs-vsctl add-port #{bridge} #{ethernet}"
+      action :run
+      not_if "ovs-vsctl show | grep 'Bridge #{bridge}'"
+      notifies :restart, "service[quantum-plugin-openvswitch-agent]", :delayed
+    end
+   end        
 end
 
 if node['openstack']['network']['disable_offload']

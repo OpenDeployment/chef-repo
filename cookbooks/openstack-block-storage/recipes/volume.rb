@@ -52,7 +52,7 @@ platform_options["cinder_iscsitarget_packages"].each do |pkg|
 end
 
 execute "create_cinder_volumes" do
-  command ". /tmp/cinder-volumes.sh"
+  command "sh /tmp/cinder-volumes.sh"
   action :nothing
 end
 
@@ -99,7 +99,7 @@ case node["openstack"]["block-storage"]["volume"]["driver"]
       mode "0755"
       source "cinder-volumes"
       action :create
-      notifies :run, "execute[create_cinder_volumes]", :immediatelly
+      notifies :run, "execute[create_cinder_volumes]", :delayed
       only_if {node["openstack"]["volume"]["mode"] == "loopfile"}
     end
 end

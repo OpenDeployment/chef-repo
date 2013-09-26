@@ -33,5 +33,5 @@ service "nova-conductor" do
   service_name platform_options["compute_conductor_service"]
   supports :status => true, :restart => true
   subscribes :restart, resources("template[/etc/nova/nova.conf]")
-  action [:enable, :start]
+  action [ :enable, :restart ]
 end
