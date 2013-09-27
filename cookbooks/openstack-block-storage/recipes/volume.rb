@@ -26,7 +26,6 @@ end
 
 include_recipe "openstack-block-storage::cinder-common"
 
-puts "***************** openstack-block-storage:: volume *********************"
 platform_options = node["openstack"]["block-storage"]["platform"]
 
 platform_options["cinder_volume_packages"].each do |pkg|
@@ -56,10 +55,6 @@ execute "create_cinder_volumes" do
   command "sh /tmp/cinder_volumes.sh"
   action :nothing
 end
-
-
-puts "****node['openstack']['volume']['mode'] = #{node['openstack']['volume']['mode']}*************"
-puts "****node['openstack']['block-storage']['volume']['driver']= #{node['openstack']['block-storage']['volume']['driver']}*****"
 
 case node["openstack"]["block-storage"]["volume"]["driver"]
   when "cinder.volume.drivers.netapp.iscsi.NetAppISCSIDriver"
@@ -98,7 +93,6 @@ case node["openstack"]["block-storage"]["volume"]["driver"]
     end
    
   when "cinder.volume.drivers.lvm.LVMISCSIDriver"
-    puts %Q|****node["openstack"]["volume"]["mode"] = #{node["openstack"]["volume"]["mode"]}*************|
     template "/tmp/cinder_volumes.sh" do
       source "cinder_volumes.sh.erb"
       owner "root"
