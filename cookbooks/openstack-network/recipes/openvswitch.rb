@@ -116,7 +116,7 @@ if not ["nicira", "plumgrid", "bigswitch"].include?(main_plugin)
       ignore_failure true
       command "ovs-vsctl add-br #{tun_bridge}"
       action :run
-      not_if "ovs-vsctl show | grep 'Bridge #{tun_bridge}'"
+      not_if "ovs-vsctl show | grep 'Bridge \"#{tun_bridge}\"'"
       notifies :restart, "service[quantum-plugin-openvswitch-agent]", :delayed
     end
   end
@@ -129,7 +129,7 @@ if not ["nicira", "plumgrid", "bigswitch"].include?(main_plugin)
       ignore_failure true
       command "ovs-vsctl add-br #{bridge};ovs-vsctl add-port #{bridge} #{ethernet}"
       action :run
-      not_if "ovs-vsctl show | grep 'Bridge #{bridge}'"
+      not_if "ovs-vsctl show | grep 'Bridge \"#{bridge}\"'"
       notifies :restart, "service[quantum-plugin-openvswitch-agent]", :delayed
     end
    end        

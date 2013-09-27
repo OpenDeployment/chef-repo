@@ -110,7 +110,7 @@ service "cinder-volume" do
   service_name platform_options["cinder_volume_service"]
   supports :status => true, :restart => true
 
-  action [ :enable, :start ]
+  action [ :enable, :restart ]
   subscribes :restart, "template[/etc/cinder/cinder.conf]"
 end
 
