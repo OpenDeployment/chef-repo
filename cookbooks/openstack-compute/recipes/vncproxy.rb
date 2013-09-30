@@ -31,6 +31,13 @@ platform_options["compute_vncproxy_packages"].each do |pkg|
 end
 
 # required for vnc console authentication
+platform_options["compute_vncproxy_console_packages"].each do |pkg|
+  package pkg do
+    action :upgrade
+    only_if { platform?("ubuntu") }
+  end
+end
+
 platform_options["compute_vncproxy_consoleauth_packages"].each do |pkg|
   package pkg do
     action :upgrade

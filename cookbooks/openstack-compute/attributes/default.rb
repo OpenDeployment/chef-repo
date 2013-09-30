@@ -316,6 +316,9 @@ when "ubuntu"
     # Websockify is needed due to https://bugs.launchpad.net/ubuntu/+source/nova/+bug/1076442
     "compute_vncproxy_packages" => ["novnc", "websockify", "nova-novncproxy"],
     "compute_vncproxy_service" => "nova-novncproxy",
+    "compute_vncproxy_console_packages" => ["nova-console"],
+    "compute_vncproxy_console_service" => "nova-console",
+    "compute_vncproxy_console_process_name" => "nova-console",
     "compute_vncproxy_consoleauth_packages" => ["nova-consoleauth"],
     "compute_vncproxy_consoleauth_service" => "nova-consoleauth",
     "compute_vncproxy_consoleauth_process_name" => "nova-consoleauth",
