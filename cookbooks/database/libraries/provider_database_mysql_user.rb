@@ -48,6 +48,8 @@ class Chef
             begin
               db.query("DROP USER `#{@new_resource.username}`@`#{@new_resource.host}`")
               @new_resource.updated_by_last_action(true)
+            rescue
+              Chef::Log.warn("The action_drop drop user failed: drop user '#{@new_resource.username}'@'#{@new_resource.host}'")
             ensure
               close
             end
