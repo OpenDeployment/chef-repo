@@ -139,7 +139,12 @@ node['openstack']['services'].each_key do |service|
     
     if %Q/#{node['openstack']['services']["#{service}"]['status']}/ == "enable"
         service_endpoint = endpoint "#{service}-api"
-        node.set['openstack']["#{service}"]['adminURL'] = service_endpoint.to_s
+        if service == "identity" or service == "compute-ec2" or service == "swift"
+            service_endpoint_admin = endpoint "#{service}-admin"
+        elsif
+            service_endpoint_admin = service_endpoint
+        end
+        node.set['openstack']["#{service}"]['adminURL'] = service_endpoint_admin.to_s
         node.set['openstack']["#{service}"]['internalURL'] = service_endpoint.to_s
         node.set['openstack']["#{service}"]['publicURL'] = service_endpoint.to_s
         

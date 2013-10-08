@@ -87,13 +87,13 @@ node.override["openstack"]["network"]["plugins"] = ['openvswitch', 'openvswitch-
 # Identity (keystone)
 node.override['openstack']['endpoints']['identity-api']['host'] = mydata['endpoints']['identity']['service']['host']
 node.override['openstack']['endpoints']['identity-api']['scheme'] = mydata['endpoints']['identity']['service']['scheme']
-#node.override['openstack']['endpoints']['identity-api']['port'] = "5000"
-#node.override['openstack']['endpoints']['identity-api']['path'] = "/v2.0"
+node.override['openstack']['endpoints']['identity-api']['port'] = "5000"
+node.override['openstack']['endpoints']['identity-api']['path'] = "/v2.0"
 
 node.override['openstack']['endpoints']['identity-admin']['host'] = mydata['endpoints']['identity']['admin']['host']
 node.override['openstack']['endpoints']['identity-admin']['scheme'] = mydata['endpoints']['identity']['admin']['scheme']
-#node.override['openstack']['endpoints']['identity-admin']['port'] = "35357"
-#node.override['openstack']['endpoints']['identity-admin']['path'] = "/v2.0"
+node.override['openstack']['endpoints']['identity-admin']['port'] = "35357"
+node.override['openstack']['endpoints']['identity-admin']['path'] = "/v2.0"
 
 # Compute (Nova)
 node.override['openstack']['endpoints']['compute-api']['host'] = mydata['endpoints']['compute']['service']['host']
