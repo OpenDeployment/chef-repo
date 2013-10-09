@@ -7,8 +7,8 @@ debug = <%= node["openstack"]["network"]["debug"] %>
 # The Quantum user information for accessing the Quantum API.
 auth_url = <%= @identity_endpoint.to_s %>
 auth_region = <%= node["openstack"]["network"]["region"] %>
-admin_tenant_name = <%= node["openstack"]["network"]["service_tenant_name"] %>
-admin_user = <%= node["openstack"]["network"]["service_user"] %>
+admin_tenant_name = <%= @service_tenant_name %>
+admin_user = <%= @service_user %>
 admin_password = <%= @service_pass %>
 
 # IP address used by Nova metadata server

@@ -40,6 +40,8 @@ sql_connection = db_uri("image", db_user, db_pass)
 
 identity_endpoint = endpoint "identity-admin"
 registry_endpoint = endpoint "image-registry"
+service_tenant_name = node['openstack']['identity']['image']['tenant']
+service_user = node['openstack']['identity']['image']['username']
 service_pass = service_password node['openstack']['identity']['image']['password']
 
 package "curl" do
@@ -105,7 +107,9 @@ template "/etc/glance/glance-registry.conf" do
     :registry_port => registry_endpoint.port,
     :sql_connection => sql_connection,
     "identity_endpoint" => identity_endpoint,
-    "service_pass" => service_pass
+    "service_pass" => service_pass,
+    "service_tenant_name" => service_tenant_name,
+    "service_user" => service_user
   )
 
   notifies :restart, "service[image-registry]", :immediately
@@ -138,9 +142,9 @@ template "/tmp/tinyimage.sh" do
     group "root"
     mode  00755
     variables( 
-      :os_username => node['openstack']['identity']['admin_user'], 
-      :os_password => node['openstack']['identity']['admin_password'],
-      :os_tenant_name => node['openstack']['identity']['admin_tenant_name'],
+      :os_username => node['openstack']['identity']['image']['username'], 
+      :os_password => node['openstack']['identity']['image']['password'],
+      :os_tenant_name => node['openstack']['identity']['image']['tenant'],
       :os_auth_url => auth_uri
     )
 

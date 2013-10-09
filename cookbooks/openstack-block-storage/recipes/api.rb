@@ -58,6 +58,8 @@ service "cinder-api" do
 end
 
 identity_admin_endpoint = endpoint "identity-admin"
+service_tenant_name = node['openstack']['identity']['volume']['tenant']
+service_user = node['openstack']['identity']['volume']['username']
 service_pass = service_password node['openstack']['identity']['volume']['password']
 
 execute "cinder-manage db sync"
@@ -69,6 +71,8 @@ template "/etc/cinder/api-paste.ini" do
   mode   00644
   variables(
     :identity_admin_endpoint => identity_admin_endpoint,
+    :service_tenant_name => service_tenant_name,
+    :service_user => service_user,
     :service_pass => service_pass
   )
 

@@ -124,8 +124,8 @@ sql_connection = db_uri("network", db_user, db_pass)
 
 api_endpoint = endpoint "network-api"
 service_pass = service_password node['openstack']['identity']['network']['password']
-service_tenant_name = node["openstack"]["network"]["service_tenant_name"]
-service_user = node["openstack"]["network"]["service_user"]
+service_tenant_name = node['openstack']['identity']['network']['tenant']
+service_user = node['openstack']['identity']['network']['username']
 
 if node["openstack"]["network"]["api"]["bind_interface"].nil?
   bind_address = api_endpoint.host
@@ -174,6 +174,8 @@ template "/etc/quantum/quantum.conf" do
     :rabbit_pass => rabbit_pass,
     :core_plugin => core_plugin,
     :identity_endpoint => identity_endpoint,
+    :service_tenant_name => service_tenant_name,
+    :service_user => service_user,
     :service_pass => service_pass
   )
 
@@ -188,6 +190,8 @@ template "/etc/quantum/api-paste.ini" do
   mode   00644
   variables(
     "identity_endpoint" => identity_endpoint,
+    "service_tenant_name" => service_tenant_name,
+    "service_user" => service_user,
     "service_pass" => service_pass
   )
 

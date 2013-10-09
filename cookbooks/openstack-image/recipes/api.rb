@@ -102,8 +102,8 @@ sql_connection = db_uri("image", db_user, db_pass)
 registry_endpoint = endpoint "image-registry"
 api_endpoint = endpoint "image-api"
 service_pass = service_password node['openstack']['identity']['image']['password']
-service_tenant_name = node["openstack"]["image"]["service_tenant_name"]
-service_user = node["openstack"]["image"]["service_user"]
+service_tenant_name = node['openstack']['identity']['image']['tenant']
+service_user = node['openstack']['identity']['image']['username']
 
 # Possible combinations of options here
 # - default_store=file
@@ -157,6 +157,8 @@ template "/etc/glance/glance-api.conf" do
     :glance_flavor => glance_flavor,
     :auth_uri => auth_uri,
     :identity_admin_endpoint => identity_admin_endpoint,
+    :service_tenant_name => service_tenant_name,
+    :service_user => service_user,
     :service_pass => service_pass,
     :swift_store_key => swift_store_key,
     :swift_user_tenant => swift_user_tenant,

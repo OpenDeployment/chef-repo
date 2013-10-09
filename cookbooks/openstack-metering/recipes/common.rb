@@ -40,9 +40,13 @@ db_pass = db_password "ceilometer"
 db_query = db_info["db_type"] == "mysql" ? "?charset=utf8" : ""
 db_uri = db_uri("metering", db_user, db_pass).to_s + db_query
 
-service_user = node["openstack"]["metering"]["service_user"]
-service_pass = service_password "openstack-compute"
-service_tenant = node["openstack"]["metering"]["service_tenant_name"]
+#service_user = node["openstack"]["metering"]["service_user"]
+#service_pass = service_password "openstack-compute"
+#service_tenant = node["openstack"]["metering"]["service_tenant_name"]
+
+service_user = node['openstack']['identity']['metering']['username']
+service_pass = service_password node['openstack']['identity']['metering']['password']
+service_tenant = node['openstack']['identity']['metering']['tenant']
 
 identity_endpoint = endpoint "identity-api"
 image_endpoint = endpoint "image-api"

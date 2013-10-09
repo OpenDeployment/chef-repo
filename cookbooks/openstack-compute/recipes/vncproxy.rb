@@ -34,7 +34,7 @@ end
 platform_options["compute_vncproxy_console_packages"].each do |pkg|
   package pkg do
     action :upgrade
-    only_if { platform?("ubuntu") }
+    only_if { platform?("ubuntu") or platform?(%w(fedora redhat centos))}
   end
 end
 

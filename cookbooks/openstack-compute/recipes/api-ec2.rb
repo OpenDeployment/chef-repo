@@ -55,6 +55,8 @@ end
 
 identity_endpoint = endpoint "identity-api"
 identity_admin_endpoint = endpoint "identity-admin"
+service_tenant_name = node['openstack']['identity']['compute']['tenant']
+service_user = node['openstack']['identity']['compute']['username']
 service_pass = service_password node['openstack']['identity']['compute']['password']
 
 #TODO(jaypipes): Move this logic and stuff into the openstack-common
@@ -77,6 +79,8 @@ template "/etc/nova/api-paste.ini" do
   variables(
     :auth_uri => auth_uri,
     :identity_admin_endpoint => identity_admin_endpoint,
+    :service_tenant_name => service_tenant_name,
+    :service_user => service_user,
     :service_pass => service_pass
   )
   notifies :restart, "service[nova-api-ec2]"

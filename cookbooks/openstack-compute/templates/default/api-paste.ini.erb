@@ -107,7 +107,7 @@ auth_host = <%= @identity_admin_endpoint.host %>
 auth_port = <%= @identity_admin_endpoint.port %>
 auth_protocol = <%= @identity_admin_endpoint.scheme %>
 auth_version = <%= node["openstack"]["compute"]["api"]["auth"]["version"] %>
-admin_tenant_name = <%= node["openstack"]["compute"]["service_tenant_name"] %>
-admin_user = <%= node["openstack"]["compute"]["service_user"] %>
+admin_tenant_name = <%= @service_tenant_name %>
+admin_user = <%= @service_user %>
 admin_password = <%= @service_pass %>
 signing_dir = <%= node["openstack"]["compute"]["api"]["auth"]["cache_dir"] %>
