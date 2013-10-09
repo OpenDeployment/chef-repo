@@ -142,9 +142,9 @@ template "/tmp/tinyimage.sh" do
     group "root"
     mode  00755
     variables( 
-      :os_username => node['openstack']['identity']['image']['username'], 
-      :os_password => node['openstack']['identity']['image']['password'],
-      :os_tenant_name => node['openstack']['identity']['image']['tenant'],
+      :os_username => node['openstack']['identity']['admin_user'], 
+      :os_password => node['openstack']['identity']['admin_password'],
+      :os_tenant_name => node['openstack']['identity']['admin_tenant_name'],
       :os_auth_url => auth_uri
     )
 
