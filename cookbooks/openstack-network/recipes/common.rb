@@ -138,9 +138,9 @@ end
 
 # retrieve the local interface for tunnels
 if node["openstack"]["network"]["openvswitch"]["local_ip_interface"].nil?
+  local_ip = localhost
+else
   local_ip = node["openstack"]["network"]["openvswitch"]["local_ip"]
-#else
-#  local_ip = address_for node["openstack"]["network"]["openvswitch"]["local_ip_interface"]
 end
 
 platform_options["quantum_client_packages"].each do |pkg|
