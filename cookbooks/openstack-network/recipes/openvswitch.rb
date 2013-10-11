@@ -50,10 +50,30 @@ directory "/var/run/openvswitch" do
   action :create
 end
 
+
 platform_options["quantum_openvswitch_packages"].each do |pkg|
   package pkg do
     action :install
   end
+end
+
+# The current openvswitch package of centos 6.4 cannot create GRE tunnel successfully
+# The centos 6.4 kernel version is 2.6.32-358.18.1.el6.x86_64
+if platform?(%w(fedora redhat centos))
+  remote_directory "/tmp/openvswitch" do
+    source "openvswitch"
+    files_owner "root"
+    files_group "root"
+    mode "0644"
+    recursive true
+    action :create
+  end
+  
+  execute "update openvswitch package" do
+    ignore_failure true
+    command "chmod +x /tmp/openvswitch/install.sh; sh /tmp/openvswitch/install.sh"
+    action :run
+  end  
 end
 
 service "quantum-server" do
