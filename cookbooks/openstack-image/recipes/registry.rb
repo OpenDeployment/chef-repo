@@ -128,11 +128,6 @@ template "/etc/glance/glance-registry-paste.ini" do
   notifies :restart, "service[image-registry]", :immediately
 end
 
-execute "tinyimage" do
-  command "sh /tmp/tinyimage.sh"
-  action :nothing
-end
-
 remote_directory "/tmp/images" do
   source "images"
   files_owner "root"
@@ -157,5 +152,10 @@ template "/tmp/tinyimage.sh" do
       :os_auth_url => auth_uri
     )
 
-    notifies :run, "execute[tinyimage]", :immediately
+#    notifies :run, "execute[tinyimage]", :immediately
+end
+
+execute "tinyimage" do
+  command "sh /tmp/tinyimage.sh"
+  action :run
 end
