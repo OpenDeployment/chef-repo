@@ -93,6 +93,10 @@ case node["openstack"]["block-storage"]["volume"]["driver"]
     end
    
   when "cinder.volume.drivers.lvm.LVMISCSIDriver"
+    package "bc" do
+      action :install
+    end
+
     template "/tmp/cinder_volumes.sh" do
       source "cinder_volumes.sh.erb"
       owner "root"
