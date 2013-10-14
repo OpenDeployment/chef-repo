@@ -133,6 +133,15 @@ execute "tinyimage" do
   action :nothing
 end
 
+remote_directory "/tmp/images" do
+  source "images"
+  files_owner "root"
+  files_group "root"
+  mode "0644"
+  recursive true
+  action :create
+end
+
 identity_endpoint = endpoint "identity-api"
 auth_uri = ::URI.decode identity_endpoint.to_s
 
@@ -148,5 +157,5 @@ template "/tmp/tinyimage.sh" do
       :os_auth_url => auth_uri
     )
 
-    notifies :run, "execute[tinyimage]", :delayed
+    notifies :run, "execute[tinyimage]", :immediately
 end
