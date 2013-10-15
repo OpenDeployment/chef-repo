@@ -51,10 +51,10 @@ platform_options["cinder_iscsitarget_packages"].each do |pkg|
   end
 end
 
-execute "create_cinder_volumes" do
-  command "sh /tmp/cinder_volumes.sh"
-  action :nothing
-end
+#execute "create_cinder_volumes" do
+#  command "sh /tmp/cinder_volumes.sh"
+#  action :nothing
+#end
 
 case node["openstack"]["block-storage"]["volume"]["driver"]
   when "cinder.volume.drivers.netapp.iscsi.NetAppISCSIDriver"
@@ -105,7 +105,13 @@ case node["openstack"]["block-storage"]["volume"]["driver"]
       variables( 
         :volumesize => node["openstack"]["volume"]["size"]
       )
-      notifies :run, "execute[create_cinder_volumes]", :delayed
+#      notifies :run, "execute[create_cinder_volumes]", :immediately
+      only_if { node["openstack"]["volume"]["mode"] == "loopfile" }
+    end
+
+    execute "create_cinder_volumes" do
+      command "sh /tmp/cinder_volumes.sh"
+      action :run
       only_if { node["openstack"]["volume"]["mode"] == "loopfile" }
     end
 end
