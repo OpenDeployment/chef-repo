@@ -128,35 +128,5 @@ template "/etc/glance/glance-registry-paste.ini" do
   notifies :restart, "service[image-registry]", :immediately
 end
 
-#remote_directory "/tmp/images" do
-#  source "images"
-#  files_owner "root"
-#  files_group "root"
-#  mode "0644"
-#  recursive true
-#  action :create
-#end
-
 identity_endpoint = endpoint "identity-api"
 auth_uri = ::URI.decode identity_endpoint.to_s
-
-#emplate "/tmp/tinyimage.sh" do
-#    source "tinyimage.sh.erb"
-#    owner "root"
-#    group "root"
-#    mode  00755
-#    variables( 
-#      :os_username => node['openstack']['identity']['admin_user'], 
-#      :os_password => node['openstack']['identity']['admin_password'],
-#      :os_tenant_name => node['openstack']['identity']['admin_tenant_name'],
-#      :os_auth_url => auth_uri
-#    )
-
-#    notifies :run, "execute[tinyimage]", :delayed
-#end
-
-#execute "tinyimage" do
-#  command "sh /tmp/tinyimage.sh"
-#  action :nothing
-#end
-
