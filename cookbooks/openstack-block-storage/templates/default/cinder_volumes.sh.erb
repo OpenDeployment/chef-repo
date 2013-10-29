@@ -1,6 +1,12 @@
 #!/bin/bash
 # This file is going to create a loop file as volume disk.
 #
+ERRTRAP()
+{
+    echo "[FILE: "$PWD/$(basename "$(test -L "$0" && readlink "$0" || echo "$0")")", LINE: $1] Error: Command or function exited with status $?"
+}
+
+trap 'ERRTRAP $LINENO' ERR
 
 vgdisplay |grep cinder-volumes
 
