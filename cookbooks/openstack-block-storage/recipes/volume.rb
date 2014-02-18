@@ -25,6 +25,7 @@ class ::Chef::Recipe
 end
 
 include_recipe "openstack-block-storage::cinder-common"
+include_recipe "parted"
 
 platform_options = node["openstack"]["block-storage"]["platform"]
 

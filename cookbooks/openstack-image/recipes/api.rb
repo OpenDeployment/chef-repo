@@ -94,8 +94,8 @@ end
 
 #db_user = node["openstack"]["image"]["db"]["username"]
 #db_pass = db_password "glance"
-db_user = node["openstack"]["db"]["image"]["password"]
-db_pass = db_password node["openstack"]["db"]["image"]["password"]
+db_user = node["openstack"]["db"]["image"]["username"]
+db_pass = node["openstack"]["db"]["image"]["password"]
 
 sql_connection = db_uri("image", db_user, db_pass)
 
