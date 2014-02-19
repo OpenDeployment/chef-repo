@@ -59,6 +59,8 @@ end
 
 # The current openvswitch package of centos 6.4 cannot create GRE tunnel successfully
 # The centos 6.4 kernel version is 2.6.32-358.18.1.el6.x86_64
+=begin
+# This code block was deperated because the ovs package was updated.
 if platform?(%w(fedora redhat centos))
   remote_directory "/tmp/openvswitch" do
     source "openvswitch"
@@ -75,6 +77,7 @@ if platform?(%w(fedora redhat centos))
     action :run
   end  
 end
+=end
 
 service "quantum-server" do
   service_name node["openstack"]["network"]["platform"]["quantum_server_service"]
