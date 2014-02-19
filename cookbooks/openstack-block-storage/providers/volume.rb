@@ -68,7 +68,6 @@ def mkpart resource
       Chef::Log.error("Making partition was failed.")
     else
       resource.partition = resource.device + p_num
-      print "\n***resource.partition = #{resource.partition}***\n"
       if node['partitions'].nil?
         node.set['partitions'] = resource.partition.lines.to_a
       else
