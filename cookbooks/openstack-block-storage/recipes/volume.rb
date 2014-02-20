@@ -25,7 +25,7 @@ class ::Chef::Recipe
 end
 
 include_recipe "openstack-block-storage::cinder-common"
-include_recipe "parted"
+#include_recipe "parted"
 
 platform_options = node["openstack"]["block-storage"]["platform"]
 
@@ -51,11 +51,6 @@ platform_options["cinder_iscsitarget_packages"].each do |pkg|
     action :upgrade
   end
 end
-
-#execute "create_cinder_volumes" do
-#  command "sh /tmp/cinder_volumes.sh"
-#  action :nothing
-#end
 
 case node["openstack"]["block-storage"]["volume"]["driver"]
   when "cinder.volume.drivers.netapp.iscsi.NetAppISCSIDriver"
@@ -98,23 +93,31 @@ case node["openstack"]["block-storage"]["volume"]["driver"]
       action :install
     end
 
-    template "/tmp/cinder_volumes.sh" do
-      source "cinder_volumes.sh.erb"
-      owner "root"
-      group "root"
-      mode  00755
-      variables( 
-        :volumesize => node["openstack"]["volume"]["size"]
-      )
-#      notifies :run, "execute[create_cinder_volumes]", :immediately
-      only_if { node["openstack"]["volume"]["mode"] == "loopfile" }
+    openstack_block_storage_volume node["openstack"]["volume"]["disk"] do
+      action :create_partition
     end
 
-    execute "create_cinder_volumes" do
-      command "sh /tmp/cinder_volumes.sh"
-      action :run
-      only_if { node["openstack"]["volume"]["mode"] == "loopfile" }
+    openstack_block_storage_volume node["openstack"]["volume"]["disk"] do
+      action :mk_cinder_vol
     end
+
+#    template "/tmp/cinder_volumes.sh" do
+#      source "cinder_volumes.sh.erb"
+#      owner "root"
+#      group "root"
+#      mode  00755
+#      variables( 
+#        :volumesize => node["openstack"]["volume"]["size"]
+#      )
+#      notifies :run, "execute[create_cinder_volumes]", :immediately
+#      only_if { node["openstack"]["volume"]["mode"] == "loopfile" }
+#    end
+
+#    execute "create_cinder_volumes" do
+#      command "sh /tmp/cinder_volumes.sh"
+#      action :run
+#      only_if { node["openstack"]["volume"]["mode"] == "loopfile" }
+#    end
 end
 
 service "cinder-volume" do

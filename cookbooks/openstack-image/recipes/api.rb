@@ -50,7 +50,7 @@ service "image-api" do
   service_name platform_options["image_api_service"]
   supports :status => true, :restart => true
 
-  action :enable
+  action [:enable,:start]
 end
 
 directory "/etc/glance" do

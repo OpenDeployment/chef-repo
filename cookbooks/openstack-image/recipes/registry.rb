@@ -96,7 +96,13 @@ end
 directory "/var/log/glance" do
   owner node["openstack"]["image"]["user"]
   group node["openstack"]["image"]["group"]
-  mode  00644
+  mode  00700
+end
+
+directory "/var/cache/glance/" do
+  owner node["openstack"]["image"]["user"]
+  group node["openstack"]["image"]["group"]
+  mode  00700
 end
 
 if node["openstack"]["image"]["registry"]["bind_interface"].nil?
