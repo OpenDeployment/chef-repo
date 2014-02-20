@@ -59,6 +59,12 @@ directory "/etc/glance" do
   mode  00700
 end
 
+directory "/var/cache/glance/" do
+  owner node["openstack"]["image"]["user"]
+  group node["openstack"]["image"]["group"]
+  mode  00700
+end
+
 directory ::File.dirname node["openstack"]["image"]["api"]["auth"]["cache_dir"] do
   owner node["openstack"]["image"]["user"]
   group node["openstack"]["image"]["group"]
