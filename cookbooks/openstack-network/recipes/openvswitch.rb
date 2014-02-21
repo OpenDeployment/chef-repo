@@ -31,7 +31,6 @@ main_plugin = node["openstack"]["network"]["interface_driver_map"][driver_name]
 core_plugin = node["openstack"]["network"]["core_plugin"]
 
 if platform?("ubuntu", "debian")
-
   # obtain kernel version for kernel header
   # installation on ubuntu and debian
   kernel_ver = node["kernel"]["release"]

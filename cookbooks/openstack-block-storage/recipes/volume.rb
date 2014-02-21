@@ -25,9 +25,12 @@ class ::Chef::Recipe
 end
 
 include_recipe "openstack-block-storage::cinder-common"
-#include_recipe "parted"
 
 platform_options = node["openstack"]["block-storage"]["platform"]
+
+package "parted" do
+  action :upgrade
+end
 
 platform_options["cinder_volume_packages"].each do |pkg|
   package pkg do
@@ -50,6 +53,12 @@ platform_options["cinder_iscsitarget_packages"].each do |pkg|
 
     action :upgrade
   end
+end
+
+directory "/var/lock/cinder" do
+  owner node["openstack"]["block-storage"]["user"]
+  group node["openstack"]["block-storage"]["group"]
+  mode 00700
 end
 
 case node["openstack"]["block-storage"]["volume"]["driver"]
