@@ -26,8 +26,8 @@ default["openstack"]["image"]["custom_template_banner"] = "
 # Do not edit, changes will be overwritten
 "
 
-default["openstack"]["image"]["verbose"] = "True"
-default["openstack"]["image"]["debug"] = "True"
+default["openstack"]["image"]["verbose"] = "False"
+default["openstack"]["image"]["debug"] = "False"
 # This is the name of the Chef role that will install the Keystone Service API
 default["openstack"]["image"]["identity_service_chef_role"] = "os-identity"
 
