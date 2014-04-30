@@ -25,7 +25,7 @@ def set resource
   if rc.valid_exit_codes.include?(0)
     net = node['nic']['config']["#{resource.device}"]
     if net['status'].eql?('') or net['status'].nil?
-      ip = %x{ifconfig eth0 |grep 'inet addr' | cut -f 2 -d ":" | cut -f 1 -d " "}.split[0].split('.')
+      ip = %x{#{cmd}}.split[0].split('.')
       ip[0] = net['network'].split('.')[0]
       ip[1] = net['network'].split('.')[1]
       mac = %x{ifconfig #{resource.device}|grep "HWaddr"}.split()[4]
