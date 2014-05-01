@@ -3,43 +3,42 @@
 import pxssh
 import pexpect
 import os
-from multiprocessing import Process, Queue
+from time import time
+from multiprocessing import Process, Pool, Queue
 
-def pssh(hostname, username, password, cmd, queue):
+def pssh((hostname, username, password, cmd)):
     try:
         s = pxssh.pxssh()
         s.login(hostname, username, password)
         s.sendline(cmd)
         s.prompt()
-
     except (pexpect.EOF, Exception), e:
         print hostname, s.before
-        queue.put([hostname, s.exitstatus])
+        return [hostname, s.exitstatus]
+    finally:
+        s.close()
 
 if __name__ == '__main__':
-    procs = []
-    q = Queue()
+    failednodes = []
+    starttime =  time()
+    pool = Pool(processes = 20)
     username = "root"
-    password = "root"
-    ipstart = 154
-    ipend = 159
-    cmd = 'service quantum-openvswitch-agent status; exit $?'
-
-    for ip in range(ipstart, ipend):
-        hostname = "10.145.88.%s" % ip
-        p = Process(target=pssh, args=(hostname, username, password, cmd, q,))
-        p.start()
-        procs.append(p)
-
-    for subproc in procs:
-        subproc.join()
-
+    password = "root123"
+    net = "10.1.0"
+    ipstart = 10
+    ipend = 180
+    cmd = 'service quantum-openvswitch-agent status'
+    cmd += '; exit $?'
+    res = pool.map_async(pssh, ((net+'.'+str(ip), username, password, cmd) for ip in range(ipstart, ipend)))
+    result = res.get()
     fail = False
-    while not q.empty():
-        result = q.get()
-        if result[1] == 1:
+    for host in result:
+        if host[1] != 0:
             if not fail:
                 print "pxssh failed nodes list:"
                 fail = True
-            print result[0]
-
+            failednodes.append(host[0])
+    if fail:
+        for node in failednodes:
+            print node
+    print 'Time elapsed:', time() - starttime
