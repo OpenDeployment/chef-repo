@@ -4,7 +4,7 @@ import pxssh
 import pexpect
 import os
 from time import time
-from multiprocessing import Process, Pool, Queue
+from multiprocessing import Pool
 
 def pssh((hostname, username, password, cmd)):
     try:
@@ -20,8 +20,8 @@ def pssh((hostname, username, password, cmd)):
 
 if __name__ == '__main__':
     failednodes = []
-    starttime =  time()
-    pool = Pool(processes = 20)
+    starttime = time()
+    pool = Pool(processes = 15)
     username = "root"
     password = "root123"
     net = "10.1.0"
@@ -35,10 +35,10 @@ if __name__ == '__main__':
     for host in result:
         if host[1] != 0:
             if not fail:
-                print "pxssh failed nodes list:"
                 fail = True
             failednodes.append(host[0])
     if fail:
+        print "pxssh failed %s nodes as listed below:" % len(failednodes)
         for node in failednodes:
             print node
     print 'Time elapsed:', time() - starttime
