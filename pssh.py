@@ -31,13 +31,10 @@ if __name__ == '__main__':
     cmd += '; exit $?'
     res = pool.map_async(pssh, ((net+'.'+str(ip), username, password, cmd) for ip in range(ipstart, ipend)))
     result = res.get()
-    fail = False
     for host in result:
         if host[1] != 0:
-            if not fail:
-                fail = True
             failednodes.append(host[0])
-    if fail:
+    if failednodes:
         print "pxssh failed %s nodes as listed below:" % len(failednodes)
         for node in failednodes:
             print node
